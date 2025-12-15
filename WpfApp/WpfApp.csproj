@@ -63,12 +63,61 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\CarColor.cs" />
+    <Compile Include="Classes\CarConfiguretion.cs" />
+    <Compile Include="Classes\CarModel.cs" />
+    <Compile Include="Classes\CarOption.cs" />
+    <Compile Include="Classes\CreaditData.cs" />
+    <Compile Include="Classes\EngineType.cs" />
+    <Compile Include="Classes\UserData.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\CalculateCostPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CalculateCreaditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ChooseCarPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ChooseColorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\OrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\CalculateCostPage.xaml.cs">
+      <DependentUpon>CalculateCostPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CalculateCreaditPage.xaml.cs">
+      <DependentUpon>CalculateCreaditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ChooseCarPage.xaml.cs">
+      <DependentUpon>ChooseCarPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ChooseColorPage.xaml.cs">
+      <DependentUpon>ChooseColorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OrderPage.xaml.cs">
+      <DependentUpon>OrderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

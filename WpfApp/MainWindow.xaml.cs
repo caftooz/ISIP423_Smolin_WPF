@@ -20,9 +20,46 @@ namespace WpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        public List<CarModel> CarModels { get; set; }
         public MainWindow()
         {
+            CarModels = new List<CarModel>()
+            {
+                new CarModel("BMW", 300),
+                new CarModel("Audi", 100),
+                new CarModel("Lamborghini", 10),
+            };
+
             InitializeComponent();
+
+            DataContext = this;
+        }
+
+        private void BackButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (MainFrame.CanGoBack)
+            {
+                MainFrame.GoBack();
+            }
+        }
+
+        private void ForwardButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (MainFrame.CanGoForward)
+            {
+                MainFrame.GoForward();
+            }
+        }
+
+        private void MainFrame_OnNavigated(object sender, NavigationEventArgs e)
+        {
+            BackButton.Visibility = MainFrame.CanGoBack ? Visibility.Visible : Visibility.Collapsed;
+            ForwardButton.Visibility = MainFrame.CanGoForward ? Visibility.Visible : Visibility.Collapsed;
+
+            if (e.Content is Page page)
+            {
+                TitleTextBlock.Text = page.Title;
+            }
         }
     }
 }
