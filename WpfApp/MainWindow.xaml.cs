@@ -23,6 +23,7 @@ namespace WpfApp
         public MainWindow()
         {
             InitializeComponent();
+            FilmListBox.ItemsSource = Core.Context.Films.ToList();
         }
     }
 }

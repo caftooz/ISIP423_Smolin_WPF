@@ -7,6 +7,37 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                
+            <TextBox  x:Name="SearchTextBox" Width="400"/>
+                
+            <Button   x:Name="NameSortButton" Content="Sort by name"/>
+            <Button x:Name="RatingSortButton" Content="Sort by rating"/>
+
+            <Button  x:Name="HomeButton" Content="home"/>
+                
+            </StackPanel>
+        <ListBox Grid.Row="1" x:Name="FilmListBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="{Binding Cover}"/>
+                        <TextBlock Text="{Binding Name, StringFormat=Название: {0}}"/>
+                        <TextBlock Text="{Binding Rating, StringFormat=Рейтинг: {0}}"/>
+                        <TextBlock Text="{Binding StartDate, StringFormat=Дата: {0}}"/>
+                        <TextBlock Text="{Binding AgeRating, StringFormat=Возраст: {0}}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
     </Grid>
 </Window>
