@@ -11,16 +11,26 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-                
-            <TextBox  x:Name="SearchTextBox" Width="400"/>
-                
-            <Button   x:Name="NameSortButton" Content="Sort by name"/>
-            <Button x:Name="RatingSortButton" Content="Sort by rating"/>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <Button  x:Name="HomeButton" Content="home"/>
-                
+            <TextBox Grid.Column="1" Margin="10" x:Name="SearchTextBox" VerticalAlignment="Center"/>
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button Margin="10"  Width="20" Height="20" x:Name="NameSortButton" Content="Sort by name"/>
+                <Button  Width="20" Height="20" x:Name="RatingSortButton" Content="Sort by rating"/>
             </StackPanel>
+
+            <Button Grid.Column="4" Margin="10" x:Name="HomeButton" Content="home"/>
+
+        </Grid>
+                
         <ListBox Grid.Row="1" x:Name="FilmListBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -32,6 +42,7 @@
                         <TextBlock Text="{Binding AgeRating, StringFormat=Возрастной рейтинг: {0}+}"/>
                     </StackPanel>
                 </DataTemplate>
+                        
             </ListBox.ItemTemplate>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
