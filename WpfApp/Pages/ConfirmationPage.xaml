@@ -14,31 +14,29 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="1">
-            <StackPanel Width="200">
+        <StackPanel Width="200"  Grid.Column="1">
                 <TextBlock Text="ФИО:"/>
                 <TextBox x:Name="NameBox"/>
                 <TextBlock Text="E-mail:"/>
                 <TextBox x:Name="MailBox"/>
                 <TextBlock Text="Адрес доставки:"/>
                 <TextBox x:Name="AddressBox"/>
-                <ListBox x:Name="CartBoxList" Margin="0,20,0,20"  Focusable="False" IsHitTestVisible="False">
+                <ListBox x:Name="CartBoxList" Margin="0,20,0,20" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" MaxHeight="200">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Products.Name}"/>
-                                <TextBlock Text="{Binding Products.Cost}"/>
-                                <TextBlock Text="{Binding Count, StringFormat={} - {0} шт.}"/>
-                                <TextBlock Text="{Binding TotalCost}"/>
+                            <StackPanel Orientation="Vertical" Margin="0, 0, 0, 10">
+                                <TextBlock Text="{Binding Products.Name}" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding Count, StringFormat={}{0} шт.}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </StackPanel>
+        <StackPanel Width="200" VerticalAlignment="Bottom" Grid.Column="1">
+                <TextBlock x:Name="TotalCostBox" Text="Итого:" HorizontalAlignment="Center" FontSize="20"/>
+                <Button Content="Заказать" HorizontalAlignment="Center" FontSize="20" Click="MakeOrder"/>
+        </StackPanel>
 
-            <TextBlock x:Name="TotalCostBox" Text="Итого:" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="20, 20, 20, 80" Width="200" Height="30" FontSize="20"/>
-            <Button Content="Заказать" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="20" Width="100" Height="30" FontSize="20" Click="MakeOrder"/>
 
-        </Grid>
     </Grid>
 </Page>

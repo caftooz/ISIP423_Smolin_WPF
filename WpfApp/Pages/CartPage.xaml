@@ -14,19 +14,33 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="1" x:Name="CartListBox" Focusable="False" IsHitTestVisible="False">
+        <ListBox  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="1" x:Name="CartListBox" Focusable="False">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Products.Name}"/>
-                        <TextBlock Text="{Binding Products.Cost}"/>
-                        <TextBlock Text="{Binding Count, StringFormat={} - {0} шт.}"/>
-                        <TextBlock Text="{Binding TotalCost}"/>
-                    </StackPanel>
+                    <Border BorderBrush="Silver"  BorderThickness="2" CornerRadius="2">
+                        <StackPanel Orientation="Vertical" Margin="10">
+                            <TextBlock Text="{Binding Products.Name}" TextWrapping="Wrap" FontSize="15"/>
+                            <TextBlock Text="{Binding Products.Cost, StringFormat=Цена за шт.- {0} руб.}" FontSize="10"/>
+                            <TextBlock Text="{Binding Count, StringFormat=Количество - {0} шт.}" FontSize="10"/>
+                            <TextBlock Text="{Binding TotalCost, StringFormat=Итоговая цена - {0} руб.}" FontSize="12"/>
+                        </StackPanel>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Column="1" Content="Оформить заказ" Click="Button_Click" Height="50" Width="150" VerticalAlignment="Bottom" Margin="20"/>
-        <Button Click="BackButton_Click" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="20"/>
+        <Button Grid.Column="1" Content="Оформить заказ" Click="Button_Click" Height="50" Width="150" VerticalAlignment="Bottom" Margin="20">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Click="BackButton_Click" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="20">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Page>
