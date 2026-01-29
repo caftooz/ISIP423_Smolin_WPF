@@ -14,25 +14,42 @@
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="1" Text="Дикие ягоды" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Button x:Name="CartButton" Width="50" HorizontalAlignment="Right" Click="CartButton_Click">
+        <Button Height="30" Width="30" x:Name="CartButton" HorizontalAlignment="Right" Click="CartButton_Click" Margin="2,2,20,2">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
             <Image Source="/Images/Cart.png"/>
         </Button>
         <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:Name="ProductListBox" Grid.Row="1">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Focusable" Value="False" />
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Width="220">
-                        <Image Height="200" Source="{Binding Image}" Stretch="Uniform"/>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Margin="5" Text="{Binding Name}" HorizontalAlignment="Center"/>
-                            <TextBlock Margin="5" Text="{Binding Cost, StringFormat=- {0} руб.}" HorizontalAlignment="Center"/>
+                    <Border Background="#E6E6FA" BorderBrush="DarkViolet"  BorderThickness="2" CornerRadius="8">
+                        <StackPanel Width="200"  Margin="5">
+                            <Image Source="{Binding Image}"/>
+                            <TextBlock Margin="5" Text="{Binding Name}" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+                            <TextBlock Margin="5" Text="{Binding Cost, StringFormat= ‏ {0} руб.}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <Button Content="Добавить в корзину" Click="Button_Click" Height="30" Width="150">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+
                         </StackPanel>
-                        <Button Content="Добавить" Click="Button_Click"/>
-                    </StackPanel>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel/>
+                    <WrapPanel HorizontalAlignment="Center"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>

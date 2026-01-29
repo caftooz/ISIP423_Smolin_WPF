@@ -164,13 +164,21 @@
   <ItemGroup>
     <Resource Include="Images\Cart.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Images\Products\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Products\1.jpg" />
+    <Resource Include="Images\Products\10.jpg" />
+    <Resource Include="Images\Products\2.jpg" />
+    <Resource Include="Images\Products\3.jpg" />
+    <Resource Include="Images\Products\4.jpg" />
+    <Resource Include="Images\Products\5.jpg" />
+    <Resource Include="Images\Products\6.jpg" />
+    <Resource Include="Images\Products\7.jpg" />
+    <Resource Include="Images\Products\8.jpg" />
+    <Resource Include="Images\Products\9.jpg" />
     <Content Include="Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model.Context.cs</LastGenOutput>
