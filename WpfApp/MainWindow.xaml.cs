@@ -24,7 +24,6 @@ namespace WpfApp
         {
             InitializeComponent();
             FilmListBox.ItemsSource = Core.Context.Films.ToList();
-            //Core.Context.Films.ToList()[1].StartDate.Date;
         }
     }
 }

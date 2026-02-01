@@ -138,17 +138,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\1+1.jpg" />
-    <Resource Include="Images\EscapeFromShowshenko.jpg" />
-    <Resource Include="Images\ForestGump.jpg" />
-    <Resource Include="Images\GreenBook.jpg" />
-    <Resource Include="Images\interstellar.jpg" />
-    <Resource Include="Images\Ironman.jpg" />
-    <Resource Include="Images\Island.jpg" />
-    <Resource Include="Images\Jentelments.jpg" />
-    <Resource Include="Images\Matrix.jpg" />
-    <Resource Include="Images\OperationI.jpg" />
-    <Resource Include="Images\WolkWallStreet.jpg" />
     <Content Include="Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model.Context.cs</LastGenOutput>
@@ -160,6 +149,5 @@
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
