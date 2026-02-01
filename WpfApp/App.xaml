@@ -4,6 +4,57 @@
              xmlns:local="clr-namespace:WpfApp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        
+        <Style x:Key="HeaderTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Foreground" Value="Gray"/>
+            <Setter Property="Margin" Value="5,0,0,2"/>
+        </Style>
+
+        <Style x:Key="SeatStyle" TargetType="CheckBox">
+            <Setter Property="Width" Value="35"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border x:Name="SeatBorder" 
+                        Background="#444" 
+                        CornerRadius="5" 
+                        BorderBrush="#222" 
+                        BorderThickness="1">
+                            <Grid>
+                                <TextBlock Text="{TemplateBinding Content}" 
+                                   Foreground="White" 
+                                   FontSize="10" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"/>
+
+                                <Border Height="4" Background="#333" VerticalAlignment="Bottom" CornerRadius="0,0,5,5"/>
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="SeatBorder" Property="Background" Value="#666"/>
+                            </Trigger>
+
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="SeatBorder" Property="Background" Value="#E50914"/>
+                                <Setter TargetName="SeatBorder" Property="BorderBrush" Value="White"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="SeatBorder" Property="Background" Value="#1A1A1A"/>
+                                <Setter TargetName="SeatBorder" Property="Opacity" Value="0.3"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Application.Resources>
 </Application>

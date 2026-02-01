@@ -1,0 +1,50 @@
+﻿<Page x:Class="WpfApp.Pages.MovieDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp.Pages"
+      mc:Ignorable="d" 
+      Language="ru-RU"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Информация о фильме">
+
+    <Grid Margin="30">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Image Source="{Binding PosterPath}" Stretch="Uniform" VerticalAlignment="Top"/>
+
+        <StackPanel Grid.Column="1" Margin="30,0,0,0">
+            <TextBlock Text="{Binding Title}" FontSize="32" FontWeight="Bold" TextWrapping="Wrap"/>
+            <StackPanel Orientation="Horizontal" Margin="0,10">
+                <TextBlock Text="★ " Foreground="#ea8c2c" FontSize="18"/>
+                <TextBlock Text="{Binding Rating}" FontSize="18" FontWeight="Bold"/>
+                <Border Background="#333" CornerRadius="4" Margin="20,0,0,0" Padding="5,2">
+                    <TextBlock Text="{Binding AgeRatings.Age}"/>
+                </Border>
+            </StackPanel>
+
+            <TextBlock Text="Описание" Foreground="Gray" Margin="0,20,0,5"/>
+            <TextBlock Text="{Binding Description}" TextWrapping="Wrap" FontSize="16" LineHeight="22"/>
+
+            <TextBlock Text="Выберите сеанс" FontSize="20" FontWeight="Bold" Margin="0,30,0,10"/>
+            <ListBox x:Name="SessionsList" Background="Transparent" BorderThickness="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Button Click="Session_Click" Background="#1E1E1E" Margin="0,5" Padding="15,10" BorderThickness="0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding StartTime, StringFormat='dd MMM, HH:mm'}" Foreground="White" Width="150"/>
+                                <TextBlock Text="{Binding Halls.Name}" Foreground="Gray" Width="100"/>
+                                <TextBlock Text="{Binding Halls.Classifications.Name}" Foreground="#E50914" FontWeight="Bold" Width="80"/>
+                                <TextBlock Text="{Binding Price, StringFormat='{}{0} руб.'}" Foreground="White" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </Grid>
+</Page>
