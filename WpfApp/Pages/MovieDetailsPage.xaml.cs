@@ -24,13 +24,11 @@ namespace WpfApp.Pages
     {
         private Movies _currentMovie;
 
-        // Конструктор теперь принимает объект Movie
         public MovieDetailsPage(Movies movie)
         {
             InitializeComponent();
             _currentMovie = movie;
 
-            // Устанавливаем DataContext, чтобы в XAML работали Binding {Binding Title} и т.д.
             this.DataContext = _currentMovie;
 
             LoadSessions();
@@ -38,9 +36,7 @@ namespace WpfApp.Pages
 
         private void LoadSessions()
         {
-            // Загружаем сеансы только для этого фильма + данные о залах
             var sessions = Core.Context.Sessions
-                .Include(s => s.Halls)
                 .Where(s => s.MovieId == _currentMovie.Id)
                 .OrderBy(s => s.StartTime)
                 .ToList();
@@ -51,11 +47,9 @@ namespace WpfApp.Pages
 
         private void Session_Click(object sender, RoutedEventArgs e)
         {
-            // Получаем сеанс, на который нажали (из Button.DataContext)
             var button = sender as Button;
             if (button.DataContext is Sessions selectedSession)
             {
-                // Проверка авторизации перед переходом к местам
                 if (Core.UserID == -1)
                 {
                     MessageBox.Show("Для выбора мест необходимо войти в аккаунт.");
@@ -63,7 +57,6 @@ namespace WpfApp.Pages
                 }
                 else
                 {
-                    // Переходим к выбору мест, передавая выбранный сеанс
                     NavigationService.Navigate(new SeatSelectionPage(selectedSession));
                 }
             }

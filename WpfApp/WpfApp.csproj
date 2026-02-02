@@ -104,6 +104,7 @@
     <Compile Include="Seats.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="SeatViewModel.cs" />
     <Compile Include="Sessions.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -228,6 +229,7 @@
     <Resource Include="Images\Posters\9.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Profile.jpg" />
     <Content Include="Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model.Context.cs</LastGenOutput>

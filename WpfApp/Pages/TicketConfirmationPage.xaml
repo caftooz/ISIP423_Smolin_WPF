@@ -6,39 +6,65 @@
       xmlns:local="clr-namespace:WpfApp.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      Language="ru-RU"
       Title="Подтверждение билета">
 
     <Grid>
-        <Border Background="#1E1E1E" CornerRadius="15" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="40" Width="450">
+        <Border CornerRadius="15" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="40" Width="450">
             <StackPanel>
                 <TextBlock Text="ПОДТВЕРЖДЕНИЕ ЗАКАЗА" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,30"/>
 
                 <Grid Margin="0,5">
                     <TextBlock Text="Фильм:" Foreground="Gray"/>
-                    <TextBlock x:Name="MovieTitle" Text="Аватар 2" HorizontalAlignment="Right" FontWeight="Bold"/>
+                    <TextBlock x:Name="MovieTitle" Text="{Binding Movies.Title}" HorizontalAlignment="Right" FontWeight="Bold"/>
                 </Grid>
                 <Grid Margin="0,5">
                     <TextBlock Text="Зал:" Foreground="Gray"/>
-                    <TextBlock x:Name="HallInfo" Text="Зал 1 (IMAX)" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="HallInfo" HorizontalAlignment="Right">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} {1}">
+                                <Binding Path="Halls.Name" />
+                                <Binding Path="Halls.Classifications.Name" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
                 </Grid>
                 <Grid Margin="0,5">
                     <TextBlock Text="Дата и время:" Foreground="Gray"/>
-                    <TextBlock x:Name="DateTimeInfo" Text="15 фев, 18:00" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="DateTimeInfo" Text="{Binding StartTime, StringFormat='{}{0:d MMMM yyyy, HH:mm}'}" HorizontalAlignment="Right"/>
                 </Grid>
                 <Grid Margin="0,5">
-                    <TextBlock Text="Место:" Foreground="Gray"/>
-                    <TextBlock x:Name="SeatInfo" Text="Ряд 5, Место 12" HorizontalAlignment="Right" Foreground="#E50914"/>
+                    <TextBlock Text="Цена за 1 билет:" Foreground="Gray"/>
+                    <TextBlock x:Name="PriceInfo" HorizontalAlignment="Right"/>
                 </Grid>
+                <StackPanel Margin="0,5">
+                    <TextBlock Text="Места:" Foreground="Gray"/>
+                    <ListBox x:Name="SeatsListBox" Background="Transparent">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}Ряд: {0}, Место: {1}">
+                                            <Binding Path="Row" />
+                                            <Binding Path="Number" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
 
                 <Separator Margin="0,20" Background="#333"/>
 
                 <Grid>
-                    <TextBlock Text="К ОПЛАТЕ" FontSize="18" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="PriceText" Text="850 руб." FontSize="24" FontWeight="Bold" HorizontalAlignment="Right" Foreground="Gold"/>
+                    <TextBlock Text="ИТОГО К ОПЛАТЕ" FontSize="18" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="PriceText" Text="850 руб." FontSize="18" 
+                               FontWeight="Bold" HorizontalAlignment="Right"/>
                 </Grid>
 
-                <Button Content="ПОДТВЕРДИТЬ И ОПЛАТИТЬ" Margin="0,30,0,0" Height="50" 
-                    Background="#E50914" Foreground="White" FontWeight="Bold"/>
+                <Button Content="ПОДТВЕРДИТЬ И ОПЛАТИТЬ" Margin="0,30,0,0" 
+                        Height="50" FontWeight="Bold" Click="Button_Click"/>
             </StackPanel>
         </Border>
     </Grid>

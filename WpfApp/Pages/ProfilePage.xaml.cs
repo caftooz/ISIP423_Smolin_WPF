@@ -23,6 +23,8 @@ namespace WpfApp.Pages
         public ProfilePage()
         {
             InitializeComponent();
+            this.DataContext = Core.Context.Users.First(u => u.Id == Core.UserID);
+            TicketsListBox.ItemsSource = Core.Context.Tickets.ToList();
         }
     }
 }

@@ -31,30 +31,29 @@ namespace WpfApp.Pages
         {
             if (SearchTextBox == null || SortComboBox == null || MoviesListBox == null) return;
 
-            var query = Core.Context.Movies.Include(m => m.AgeRatings).AsQueryable();
+            var movies = Core.Context.Movies.AsQueryable();
 
             string search = SearchTextBox.Text.ToLower();
             if (!string.IsNullOrWhiteSpace(search))
             {
-                query = query.Where(m => m.Title.ToLower().Contains(search));
+                movies = movies.Where(m => m.Title.ToLower().Contains(search));
             }
 
             switch (SortComboBox.SelectedIndex)
             {
                 case 0:
-                    query = query.OrderBy(m => m.Title);
+                    movies = movies.OrderBy(m => m.Title);
                     break;
                 case 1:
-                    query = query.OrderByDescending(m => m.Rating);
+                    movies = movies.OrderByDescending(m => m.Rating);
                     break;
             }
 
-            MoviesListBox.ItemsSource = query.ToList();
+            MoviesListBox.ItemsSource = movies.ToList();
         }
 
         private void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
-            // Логика перехода: если не залогинен -> LoginPage, если залогинен -> ProfilePage
             if (Core.UserID == -1)
                 NavigationService.Navigate(new LoginPage());
             else  

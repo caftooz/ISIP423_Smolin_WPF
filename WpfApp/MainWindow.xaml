@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="700" Width="1300">
     <Grid>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="/Pages/HomePage.xaml"/>
-    </Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="LightGray">
+            <Button Content="На главную" Width="100" Height="25" Margin="5"
+                    HorizontalAlignment="Left" x:Name="OpenHomePage" Click="OpenHomePage_Click"/>
+        </Grid>
+        <Frame Grid.Row="1" x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="/Pages/HomePage.xaml"/>
+        
+   </Grid>
 </Window>

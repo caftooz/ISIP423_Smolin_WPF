@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp.Pages;
 
 namespace WpfApp
 {
@@ -23,6 +24,11 @@ namespace WpfApp
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void OpenHomePage_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new HomePage());
         }
     }
 }

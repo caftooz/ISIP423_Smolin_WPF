@@ -12,26 +12,36 @@
         <StackPanel HorizontalAlignment="Center">
             <TextBlock Text="ЭКРАН" HorizontalAlignment="Center" Foreground="Gray" Margin="0,0,0,40" FontSize="20"/>
 
-            <ItemsControl x:Name="SeatsItemsControl">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid x:Name="SeatsGrid" Columns="15" HorizontalAlignment="Center"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <CheckBox Style="{StaticResource SeatStyle}" 
-                                  IsChecked="{Binding IsSelected}"
-                                  IsEnabled="{Binding IsAvailable}"
-                                  Content="{Binding Number}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+    
+    <StackPanel x:Name="RowsNumbersPanel" Margin="0,0,15,0" VerticalAlignment="Top">
+        </StackPanel>
+
+    <ItemsControl x:Name="SeatsItemsControl">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                            <UniformGrid x:Name="SeatsGrid" 
+                                         Columns="{Binding Path=Tag, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                         HorizontalAlignment="Left"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <CheckBox Style="{StaticResource SeatStyle}" 
+                          IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                          IsEnabled="{Binding IsAvailable}"
+                          Click="Seat_Click"/>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    
+</StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30">
-                <Button Content="Убрать занятые" Margin="10" Padding="10"/>
-                <Button x:Name="ConfirmBtn" Content="Оформить билет"
-                        Background="#E50914" Foreground="White" Padding="20,10" IsEnabled="False"/>
+                <Button x:Name="ConfirmBtn"  Margin="10" Padding="10" 
+                        Content="Оформить билет"
+                        IsEnabled="False"
+                        Click="Confirm_Click"/>
             </StackPanel>
         </StackPanel>
     </Grid>

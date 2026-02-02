@@ -24,7 +24,7 @@
             <TextBlock Text="Повторите пароль" Style="{StaticResource HeaderTitle}"/>
             <PasswordBox x:Name="PassRepBox" Margin="0,5,0,25" Height="35" VerticalContentAlignment="Center"/>
             
-            <Button x:Name="RegisterButton" Content="Создать аккаунт" Height="40"/>
+            <Button x:Name="RegisterButton" Content="Создать аккаунт" Height="40" Click="RegisterButton_Click"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -20,9 +20,40 @@ namespace WpfApp.Pages
     /// </summary>
     public partial class TicketConfirmationPage : Page
     {
-        public TicketConfirmationPage()
+        Sessions _session;
+        List<SeatViewModel> _seats;
+        public TicketConfirmationPage(Sessions session, List<SeatViewModel> seats)
         {
             InitializeComponent();
+            _session = session;
+            _seats = seats;
+
+            this.DataContext = _session;
+
+            SeatsListBox.ItemsSource = _seats;
+            PriceText.Text = _session.Price * _seats.Count + " руб.";
+            PriceInfo.Text = _session.Price + " руб.";
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (_seats == null) return;
+            foreach (var seat in _seats)
+            {
+                Tickets ticket = new Tickets() 
+                {
+                    Sessions = _session,
+                    SeatId = seat.Id,
+                    UserId = Core.UserID,
+                    PurchaseDate = DateTime.Now
+                };
+
+                Core.Context.Tickets.Add(ticket);
+                Core.Context.SaveChanges();
+
+                NavigationService.Navigate(new ProfilePage());
+
+            }
         }
     }
 }
