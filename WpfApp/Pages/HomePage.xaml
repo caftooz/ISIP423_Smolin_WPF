@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:WpfApp.Pages"
       mc:Ignorable="d" 
       Language="ru-RU"
-      Title="Главная - Кинотеатр" Height="602" Width="1059">
+      d:DesignHeight="600" d:DesignWidth="1000"
+      Title="Главная - Кинотеатр">
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
