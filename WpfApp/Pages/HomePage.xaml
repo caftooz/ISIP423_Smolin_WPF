@@ -6,8 +6,7 @@
       xmlns:local="clr-namespace:WpfApp.Pages"
       mc:Ignorable="d" 
       Language="ru-RU"
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Главная - Кинотеатр">
+      Title="Главная - Кинотеатр" Height="602" Width="1059">
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -29,6 +28,20 @@
                     <ComboBoxItem Content="Названию"/>
                     <ComboBoxItem Content="Рейтингу"/>
                 </ComboBox>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Center" Margin="0,0,-470,0">
+                <TextBlock Text="Жанр" Style="{StaticResource HeaderTitle}"/>
+                <ComboBox x:Name="GenreComboBox" Width="100" Height="35" 
+                          VerticalContentAlignment="Center" Padding="10,0" SelectionChanged="GenreComboBox_SelectionChanged">
+                </ComboBox>
+            </StackPanel>
+            
+            <StackPanel HorizontalAlignment="Center" Margin="0,0,-620,0">
+                <TextBlock Text="Сброс" Style="{StaticResource HeaderTitle}"/>
+                <Button  Content="x" FontWeight="Medium"  Foreground="Red" FontSize="40" Padding="0,-16,0,0" 
+                         Background="White"
+                         Width="35" Height="35" x:Name="ResetGenres" Click="ResetGenres_Click"/>
             </StackPanel>
 
             <Button Content="Личный кабинет" Width="100" Height="35" HorizontalAlignment="Right"
@@ -79,6 +92,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        
+
     </Grid>
 </Page>

@@ -25,6 +25,10 @@ namespace WpfApp.Pages
         {
             InitializeComponent();
             ApplyFilters();
+
+            GenreComboBox.ItemsSource = Core.Context.Genres.ToList();
+            GenreComboBox.DisplayMemberPath = "Name";
+            GenreComboBox.SelectedValuePath = "ID";
         }
 
         private void ApplyFilters()
@@ -39,6 +43,16 @@ namespace WpfApp.Pages
                 movies = movies.Where(m => m.Title.ToLower().Contains(search));
             }
 
+            if (GenreComboBox.SelectedItem != null)
+            {
+                var genre = Core.Context.Genres.ToList()[GenreComboBox.SelectedIndex];
+
+                if (genre != null)
+                {
+                    movies = movies.Where(m => m.Genres.Any(g => g.Id == genre.Id));
+                }
+            }
+
             switch (SortComboBox.SelectedIndex)
             {
                 case 0:
@@ -48,6 +62,7 @@ namespace WpfApp.Pages
                     movies = movies.OrderByDescending(m => m.Rating);
                     break;
             }
+
 
             MoviesListBox.ItemsSource = movies.ToList();
         }
@@ -76,6 +91,16 @@ namespace WpfApp.Pages
             {
                 NavigationService.Navigate(new MovieDetailsPage(selectedMovie));
             }
+        }
+
+        private void GenreComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ApplyFilters();
+        }
+
+        private void ResetGenres_Click(object sender, RoutedEventArgs e)
+        {
+            GenreComboBox.SelectedItem = null;
         }
     }
 }
