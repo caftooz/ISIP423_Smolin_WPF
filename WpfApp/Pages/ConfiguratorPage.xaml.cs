@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using WpfApp.Logic;
 
 namespace WpfApp.Pages
@@ -22,8 +23,38 @@ namespace WpfApp.Pages
         {
             InitializeComponent();
             LoadSlots();
+            InitializeAssembly();
             UpdateTotal();
-            
+        }
+
+        private void InitializeAssembly()
+        {
+            if (Core.CurrentAssembly != null)
+            {
+                TbAssemblyName.Text = Core.CurrentAssembly.name;
+                TbAuthorName.Text = Core.CurrentAssembly.author;
+                foreach (var slot in Core.PartSlots)
+                {
+                    slot.SelectedPartId = 0;
+                    slot.SelectedPartName = "Не выбрано";
+                    slot.Price = 0;
+                    slot.ImagePath = String.Empty;
+                }
+                foreach (var partAssembly in Core.Context.partassembly_.Where(pa => pa.assemblyid == Core.CurrentAssembly.id))
+                {
+                    var slot = Core.PartSlots.FirstOrDefault(s => s.CategoryId == Core.Context.basepart_.FirstOrDefault(p => p.id == partAssembly.partid).parttypeid);
+                    if (slot != null)
+                    {
+                        var part = Core.Context.basepart_.FirstOrDefault(p => p.id == partAssembly.partid);
+                        slot.SelectedPartId = part.id;
+                        slot.SelectedPartName = part.name;
+                        slot.Price = part.price;
+                        slot.ImagePath = part.image;
+                    }
+                }
+                PartsItemsControl.ItemsSource = null;
+                PartsItemsControl.ItemsSource = Core.PartSlots;
+            }
         }
 
         private void LoadSlots()
@@ -56,10 +87,26 @@ namespace WpfApp.Pages
                 return;
             }
 
-            // Логика сохранения через EDM:
-            // 1. Создать объект assembly$
-            // 2. Добавить в контекст
-            // 3. Сохранить изменения
+            var assembly = new assembly_
+            {
+                name = TbAssemblyName.Text,
+                author = TbAuthorName.Text
+            };
+            Core.Context.assembly_.Add(assembly);
+
+            foreach (var slot in Core.PartSlots)
+            {
+                if (slot.SelectedPartId != 0)
+                {
+                    var partAssembly = new partassembly_
+                    {
+                        assemblyid = assembly.id,
+                        partid = slot.SelectedPartId
+                    };
+                    Core.Context.partassembly_.Add(partAssembly);
+                }
+            }
+            Core.Context.SaveChanges();
             MessageBox.Show("Сборка успешно сохранена!");
         }
 
@@ -73,8 +120,13 @@ namespace WpfApp.Pages
 
         private void CheckCompatibility()
         {
-            // Здесь будет логика сравнения:
-            // Slots.First(s => s.CategoryId == 1).SelectedPart...
+            var result = CompatibilityChecker.CheckCompatibility(Core.PartSlots);
+            if (result == "Совместимо")
+                TxtCompatibility.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#27AE60"));
+            else
+                TxtCompatibility.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF4545"));
+
+            TxtCompatibility.Text = result;
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
@@ -91,6 +143,8 @@ namespace WpfApp.Pages
                 UpdateTotal();
                 PartsItemsControl.ItemsSource = null;
                 PartsItemsControl.ItemsSource = Core.PartSlots;
+                TbAssemblyName.Text = String.Empty;
+                TbAuthorName.Text = String.Empty;
             }
         }
     }

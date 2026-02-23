@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
 
         <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Margin="0,0,20,0">
-            <StackPanel x:Name="PartsStackPanel">
+            <StackPanel x:Name="PartsStackPanel" Margin="5">
                 <Grid>
                     <TextBlock Text="Выбор комплектующих" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" Foreground="#2C3E50"/>
                     <Button x:Name="ClearButton" FontWeight="Bold" Foreground="White" Background="#FFFF4545" Content="X" Padding="10,5" Margin="0,0,15,0" VerticalAlignment="Center" HorizontalAlignment="Right" Click="ClearButton_Click"/>
@@ -25,7 +25,7 @@
                         <DataTemplate>
                             <Border Background="White" CornerRadius="8" Padding="15" Margin="0,0,0,10">
                                 <Border.Effect>
-                                    <DropShadowEffect BlurRadius="10" ShadowDepth="1" Color="#D0D0D0" Opacity="0.5"/>
+                                    <DropShadowEffect BlurRadius="10" ShadowDepth="1" Color="#D0D0D0" Opacity="1"/>
                                 </Border.Effect>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -35,14 +35,17 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Text="{Binding CategoryName}" FontWeight="SemiBold" Width="120" VerticalAlignment="Center" Foreground="#7F8C8D"/>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding CategoryName}" FontWeight="SemiBold" Width="120" VerticalAlignment="Center" Foreground="#7F8C8D"/>
+                                        <Image Source="{Binding ImagePath}" Width="60" Height="60" Margin="0,5,0,0"/>
+                                    </StackPanel>
 
                                     <TextBlock Grid.Column="1" Text="{Binding SelectedPartName}" FontSize="16" VerticalAlignment="Center" Margin="10,0" TextWrapping="Wrap"/>
 
                                     <TextBlock Grid.Column="2" Text="{Binding PriceString}" FontWeight="Bold" VerticalAlignment="Center" Margin="10,0" Foreground="#27AE60"/>
 
                                     <Button Grid.Column="3" Content="Выбрать" 
-                                            Padding="15,5" 
+                                            Padding="15,5" Height="30"
                                             Click="SelectPart_Click" 
                                             Tag="{Binding CategoryId}"/>
                                 </Grid>

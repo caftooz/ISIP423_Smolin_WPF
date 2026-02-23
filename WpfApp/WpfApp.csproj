@@ -120,9 +120,6 @@
     <Compile Include="Pages\AssembliesListPage.xaml.cs">
       <DependentUpon>AssembliesListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AssemblyDetailsPage.xaml.cs">
-      <DependentUpon>AssemblyDetailsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\ConfiguratorPage.xaml.cs">
       <DependentUpon>ConfiguratorPage.xaml</DependentUpon>
     </Compile>
@@ -184,10 +181,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\AssembliesListPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\AssemblyDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
