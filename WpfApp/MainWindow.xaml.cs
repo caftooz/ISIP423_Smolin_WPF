@@ -12,17 +12,28 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp.Pages;
 
 namespace WpfApp
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+
+            // При запуске открываем сразу страницу конфигуратора
+            MainFrame.Navigate(new ConfiguratorPage());
+        }
+
+        private void BtnConfigurator_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new ConfiguratorPage());
+        }
+
+        private void BtnMyAssemblies_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new AssembliesListPage());
         }
     }
 }

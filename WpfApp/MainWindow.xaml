@@ -5,8 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Собери сам - Конфигуратор ПК" 
+        Height="700" Width="1100"
+        MinWidth="800" MinHeight="600">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#2C3E50" Padding="20,10">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="🖥️ СБОРЩИК ПК" 
+                            Foreground="White" 
+                            FontSize="24" 
+                            FontWeight="Bold"
+                            VerticalAlignment="Center"
+                            Margin="0,0,30,0"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Конфигуратор" 
+                            Click="BtnConfigurator_Click"
+                            Style="{StaticResource NavButtonStyle}"/>
+                    <Button Content="Мои сборки" 
+                            Click="BtnMyAssemblies_Click"
+                            Style="{StaticResource NavButtonStyle}"
+                            Margin="10,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Frame Name="MainFrame" 
+               Grid.Row="1" 
+               NavigationUIVisibility="Hidden" 
+               Margin="0"/>
     </Grid>
 </Window>
