@@ -148,6 +148,41 @@ namespace WpfApp.Pages
                 TbAuthorName.Text = String.Empty;
             }
         }
+
+        private void ShowPartDetails(basepart_ part)
+        {
+            if (part == null) return;
+
+            ModalTitle.Text = part.name;
+            ModalPrice.Text = $"{part.price:N2} ₽";
+            ModalImg.Source = new BitmapImage(new Uri(part.image, UriKind.RelativeOrAbsolute));
+
+            ModalSpecs.ItemsSource = Core.LoadSpecs(part);
+
+            ModalOverlay.Visibility = Visibility.Visible;
+        }
+        private void PartName_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var textBlock = sender as TextBlock;
+            if (textBlock == null || textBlock.Tag == null) return;
+
+            int partId = (int)textBlock.Tag;
+
+            if (partId == 0) return;
+
+            var part = Core.Context.basepart_.FirstOrDefault(p => p.id == partId);
+
+            if (part != null)
+            {
+                ShowPartDetails(part);
+            }
+            
+        }
+
+        private void CloseModal_Click(object sender, RoutedEventArgs e)
+        {
+            ModalOverlay.Visibility = Visibility.Collapsed;
+        }
     }
 
 }
