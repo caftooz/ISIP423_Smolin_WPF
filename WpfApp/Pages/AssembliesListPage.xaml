@@ -14,7 +14,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Сохранённые конфигурации" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" Foreground="#2C3E50"/>
+        <TextBlock Text="Сохранённые конфигурации" FontSize="24" FontWeight="Bold" Margin="5,5,5,20" Foreground="#2C3E50"/>
 
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">

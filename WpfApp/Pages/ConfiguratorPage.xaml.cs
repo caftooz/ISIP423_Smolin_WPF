@@ -139,6 +139,7 @@ namespace WpfApp.Pages
                     Core.PartSlots[i].SelectedPartId = 0;
                     Core.PartSlots[i].SelectedPartName = "Не выбрано";
                     Core.PartSlots[i].Price = 0;
+                    Core.PartSlots[i].ImagePath = String.Empty;
                 }
                 UpdateTotal();
                 PartsItemsControl.ItemsSource = null;

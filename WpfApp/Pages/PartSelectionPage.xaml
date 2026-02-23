@@ -56,7 +56,7 @@
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Border Width="260" Height="380" Background="White" CornerRadius="10" Margin="10" Padding="15">
+                            <Border Width="260" Height="300" Background="White" CornerRadius="10" Margin="10" Padding="15">
                                 <Border.Effect>
                                     <DropShadowEffect BlurRadius="8" ShadowDepth="2" Color="#E0E0E0"/>
                                 </Border.Effect>
