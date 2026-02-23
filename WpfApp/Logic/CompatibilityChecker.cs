@@ -63,7 +63,7 @@ namespace WpfApp.Logic
             // Проверка Мощности БП
             if (psu != null)
             {
-                int requiredPower = (cpu?.thermalpower ?? 0) + (gpu?.recommendpower ?? 200); // 200 - среднее для системы без GPU
+                int requiredPower = (cpu?.thermalpower ?? 0) + (gpu?.recommendpower ?? 0);
                 if (psu.power < requiredPower)
                     return $"Малая мощность БП: нужно минимум {requiredPower}W, у выбранного — {psu.power}W.";
             }
