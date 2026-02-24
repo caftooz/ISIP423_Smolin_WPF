@@ -45,49 +45,47 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition x:Name="DetailsColumn" Width="0" MinWidth="0" />
             </Grid.ColumnDefinitions>
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                <ListView x:Name="LvParts" Background="Transparent" BorderThickness="0" 
-                      HorizontalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Disabled" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="LvParts_SelectionChanged">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel HorizontalAlignment="Center" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
+            <ListView Grid.Row="1"  ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="LvParts" Background="Transparent" BorderThickness="0" 
+                    HorizontalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Disabled" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="LvParts_SelectionChanged">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel HorizontalAlignment="Center" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
 
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Border Width="260" Height="300" Background="White" CornerRadius="10" Margin="10" Padding="15">
-                                <Border.Effect>
-                                    <DropShadowEffect BlurRadius="8" ShadowDepth="2" Color="#E0E0E0"/>
-                                </Border.Effect>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Width="260" Height="300" Background="White" CornerRadius="10" Margin="10" Padding="15">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="8" ShadowDepth="2" Color="#E0E0E0"/>
+                            </Border.Effect>
 
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="150"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="150"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
 
-                                    <Image Source="{Binding image}" Stretch="Uniform" Margin="0,0,0,10"/>
+                                <Image Source="{Binding image}" Stretch="Uniform" Margin="0,0,0,10"/>
 
-                                    <TextBlock Grid.Row="1" Text="{Binding name}" FontWeight="Bold" FontSize="16" 
-                           TextWrapping="Wrap" MaxHeight="45" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Grid.Row="1" Text="{Binding name}" FontWeight="Bold" FontSize="16" 
+                        TextWrapping="Wrap" MaxHeight="45" TextTrimming="CharacterEllipsis"/>
 
-                                    <TextBlock Grid.Row="2" Text="{Binding manufacturer_.name}" Foreground="#7F8C8D" Margin="0,5"/>
+                                <TextBlock Grid.Row="2" Text="{Binding manufacturer_.name}" Foreground="#7F8C8D" Margin="0,5"/>
 
-                                    <StackPanel Grid.Row="3">
-                                        <TextBlock Text="{Binding price, StringFormat={}{0:N2} ₽}" 
-                               FontSize="20" FontWeight="Black" Foreground="#27AE60" Margin="0,0,0,10"/>
-                                        <Button Content="Добавить в сборку" Background="#2980B9" Foreground="White" 
-                            Padding="10" Click="BtnSelect_Click" Tag="{Binding id}"/>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </ScrollViewer>
+                                <StackPanel Grid.Row="3">
+                                    <TextBlock Text="{Binding price, StringFormat={}{0:N2} ₽}" 
+                            FontSize="20" FontWeight="Black" Foreground="#27AE60" Margin="0,0,0,10"/>
+                                    <Button Content="Добавить в сборку" Background="#2980B9" Foreground="White" 
+                        Padding="10" Click="BtnSelect_Click" Tag="{Binding id}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             
             <Border x:Name="DetailsPanel" Grid.Row="1" Grid.Column="1" Background="White" Margin="10,0,0,0" Padding="20" Visibility="Collapsed">
                 <Border.Effect>

@@ -8,7 +8,7 @@
         Title="Собери сам - Конфигуратор ПК" 
         Icon="/Resources/appicon.ico"
         Height="700" Width="1100"
-        MinWidth="900" MinHeight="800">
+        MinWidth="1100" MinHeight="700">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
