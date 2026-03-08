@@ -1,0 +1,237 @@
+﻿<UserControl x:Class="WpfApp.Views.GameView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:conv="clr-namespace:WpfApp.Converters"
+             xmlns:local="clr-namespace:WpfApp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <conv:BoolToVisibilityConverter  x:Key="BoolToVis"/>
+        <conv:HpToWidthConverter         x:Key="HpWidth"/>
+        <conv:HpToColorConverter         x:Key="HpColor"/>
+
+     
+        <Style x:Key="CombatBtn" TargetType="Button">
+            <Setter Property="Foreground"       Value="White"/>
+            <Setter Property="FontSize"         Value="15"/>
+            <Setter Property="FontWeight"       Value="Bold"/>
+            <Setter Property="Height"           Value="44"/>
+            <Setter Property="Margin"           Value="4"/>
+            <Setter Property="BorderThickness"  Value="0"/>
+            <Setter Property="Cursor"           Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+          
+            <RowDefinition Height="*"/>
+       
+            <RowDefinition Height="200"/>
+        
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#16213e" CornerRadius="8" Padding="12,8" Margin="0,0,0,8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+             
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="⚔️ Этаж " Foreground="#a0a0c0" FontSize="14"/>
+                    <TextBlock Text="{Binding Floor}" Foreground="#e94560" FontSize="14" FontWeight="Bold"/>
+                </StackPanel>
+
+             
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock HorizontalAlignment="Center" Margin="0,0,0,3">
+                        <Run Text="HP: " Foreground="#a0a0c0" FontSize="12"/>
+                        <Run Text="{Binding PlayerHp, Mode=OneWay}" Foreground="White" FontSize="12" FontWeight="Bold"/>
+                        <Run Text=" / " Foreground="#a0a0c0" FontSize="12"/>
+                        <Run Text="{Binding PlayerMaxHp, Mode=OneWay}" Foreground="#a0a0c0" FontSize="12"/>
+                    </TextBlock>
+                    <Border Background="#0d0d1a" CornerRadius="4" Height="14" Width="280">
+                        <Border CornerRadius="4" HorizontalAlignment="Left" Height="14">
+                            <Border.Width>
+                                <MultiBinding Converter="{StaticResource HpWidth}" ConverterParameter="280">
+                                    <Binding Path="PlayerHp" Mode="OneWay"/>
+                                    <Binding Path="PlayerMaxHp" Mode="OneWay"/>
+                                </MultiBinding>
+                            </Border.Width>
+                            <Border.Background>
+                                <MultiBinding Converter="{StaticResource HpColor}">
+                                    <Binding Path="PlayerHp" Mode="OneWay"/>
+                                    <Binding Path="PlayerMaxHp" Mode="OneWay"/>
+                                </MultiBinding>
+                            </Border.Background>
+                        </Border>
+                    </Border>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Background="#16213e" CornerRadius="8" Margin="0,0,0,8">
+            <Grid>
+                <Image Source="{Binding SceneImagePath, Mode=OneWay}"
+                       Width="200" Height="200"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                       Visibility="{Binding IsChestScene, Converter={StaticResource BoolToVis}}"/>
+
+                <ItemsControl ItemsSource="{Binding Enemies}"
+                              HorizontalAlignment="Center" VerticalAlignment="Center"
+                              Visibility="{Binding IsChestScene, Converter={StaticResource BoolToVis},
+                                           ConverterParameter=Inverse}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="8,0" Opacity="{Binding IsAlive, Converter={StaticResource BoolToVis}}">
+                                <StackPanel HorizontalAlignment="Center">
+                                  
+                                    <Image Source="{Binding ImagePath, Mode=OneWay}"
+                                           Width="120" Height="120"
+                                           RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                           HorizontalAlignment="Center"/>
+                                 
+                                    <TextBlock Text="{Binding Name, Mode=OneWay}"
+                                               Foreground="#e94560" FontWeight="Bold" FontSize="12"
+                                               HorizontalAlignment="Center" Margin="0,4,0,2"/>
+                                   
+                                    <TextBlock Text="{Binding HpText, Mode=OneWay}"
+                                               Foreground="#a0a0c0" FontSize="11"
+                                               HorizontalAlignment="Center"/>
+                                  
+                                    <Border Background="#1a1a2e" CornerRadius="3" Height="6" Width="100" Margin="0,3,0,0">
+                                        <Border CornerRadius="3" Background="#e94560" HorizontalAlignment="Left" Height="6">
+                                            <Border.Width>
+                                                <MultiBinding Converter="{StaticResource HpWidth}" ConverterParameter="100">
+                                                    <Binding Path="CurrentHp" Mode="OneWay"/>
+                                                    <Binding Path="MaxHp" Mode="OneWay"/>
+                                                </MultiBinding>
+                                            </Border.Width>
+                                        </Border>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,16"
+                            Visibility="{Binding IsCombatPanelVisible, Converter={StaticResource BoolToVis}}">
+                    <TextBlock Text="Ваш ход:" Foreground="#a0a0c0" FontSize="13"
+                               HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="⚔️  АТАКА" Style="{StaticResource CombatBtn}"
+                                Background="#e94560" Width="130"
+                                Command="{Binding AttackCommand}"/>
+                        <Button Content="🛡️  ЗАЩИТА" Style="{StaticResource CombatBtn}"
+                                Background="#0f3460" Width="130"
+                                Command="{Binding BlockCommand}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,16"
+                            Visibility="{Binding IsChestPanelVisible, Converter={StaticResource BoolToVis}}">
+                    <TextBlock Text="{Binding LootCompareText}"
+                               Foreground="White" FontSize="13" TextAlignment="Center"
+                               Margin="0,0,0,10"/>
+                    <StackPanel Orientation="Horizontal"
+                                Visibility="{Binding IsLootWeaponOrArmor, Converter={StaticResource BoolToVis}}">
+                        <Button Content="✅ Взять" Style="{StaticResource CombatBtn}"
+                                Background="#2ecc71" Width="130"
+                                Command="{Binding TakeLootCommand}"/>
+                        <Button Content="🗑️ Выбросить" Style="{StaticResource CombatBtn}"
+                                Background="#7f8c8d" Width="130"
+                                Command="{Binding DropLootCommand}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <Button Content="➡️  СЛЕДУЮЩИЙ ЭТАЖ"
+                        Style="{StaticResource CombatBtn}"
+                        Background="#e94560" Width="220"
+                        HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,16"
+                        Command="{Binding NextFloorCommand}"
+                        Visibility="{Binding IsNextFloorVisible, Converter={StaticResource BoolToVis}}"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="#16213e" CornerRadius="8" Padding="12">
+                <StackPanel>
+                    <TextBlock Text="Инвентарь" Foreground="#e94560" FontWeight="Bold"
+                               FontSize="14" Margin="0,0,0,8"/>
+       
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,8">
+                        <Image Source="{Binding WeaponImagePath, Mode=OneWay}"
+                               Width="40" Height="40" Margin="0,0,10,0"
+                               RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Оружие" Foreground="#a0a0c0" FontSize="10"/>
+                            <TextBlock Text="{Binding WeaponText, Mode=OneWay}"
+                                       Foreground="White" FontSize="12" FontWeight="Bold"/>
+                        </StackPanel>
+                    </StackPanel>
+           
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="{Binding ArmorImagePath, Mode=OneWay}"
+                               Width="40" Height="40" Margin="0,0,10,0"
+                               RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Броня" Foreground="#a0a0c0" FontSize="10"/>
+                            <TextBlock Text="{Binding ArmorText, Mode=OneWay}"
+                                       Foreground="White" FontSize="12" FontWeight="Bold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+        
+            <Border Grid.Column="2" Background="#16213e" CornerRadius="8" Padding="12">
+                <StackPanel>
+                    <TextBlock Text="Журнал событий" Foreground="#e94560" FontWeight="Bold"
+                               FontSize="14" Margin="0,0,0,8"/>
+                    <ScrollViewer MaxHeight="140" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding EventLog}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Foreground="#c0c0d8"
+                                               FontSize="11" TextWrapping="Wrap"
+                                               Margin="0,1,0,1"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+
+
+</UserControl>
