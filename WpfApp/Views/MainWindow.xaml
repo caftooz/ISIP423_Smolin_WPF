@@ -1,0 +1,217 @@
+<Window x:Class="ServiceDesk.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ServiceDesk — Управление заявками"
+        Height="700" Width="1400"
+        WindowStartupLocation="CenterScreen"
+        MinWidth="900" MinHeight="550"
+        Background="{StaticResource LightBgBrush}">
+
+    <Window.Resources>
+        <!-- Стиль меню-пункта боковой панели -->
+        <Style x:Key="SideMenuBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#AECDE8"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Padding" Value="18,12"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#3D5166"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ═══ Боковая панель ═══ -->
+        <Border Grid.Column="0" Background="{StaticResource PrimaryBrush}">
+            <DockPanel>
+                <!-- Шапка -->
+                <StackPanel DockPanel.Dock="Top" Margin="0,24,0,16">
+                    <TextBlock Text="🔧 ServiceDesk"
+                               Foreground="White"
+                               FontSize="16" FontWeight="Bold"
+                               Margin="18,0"/>
+                    <TextBlock x:Name="TxtUserInfo"
+                               Foreground="#AECDE8"
+                               FontSize="11"
+                               Margin="18,6,18,0"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+
+                <Separator Background="#3D5166" DockPanel.Dock="Top" Margin="18,0"/>
+
+                <!-- Меню -->
+                <StackPanel DockPanel.Dock="Top" Margin="0,8,0,0">
+                    <Button x:Name="BtnRequests"
+                            Content="📋  Заявки"
+                            Style="{StaticResource SideMenuBtn}"
+                            Click="BtnRequests_Click"/>
+                    <Button x:Name="BtnUsers"
+                            Content="👥  Пользователи"
+                            Style="{StaticResource SideMenuBtn}"
+                            Click="BtnUsers_Click"
+                            Visibility="Collapsed"/>
+                    <Button x:Name="BtnDirEquip"
+                            Content="🖥  Типы техники"
+                            Style="{StaticResource SideMenuBtn}"
+                            Click="BtnDirEquip_Click"
+                            Visibility="Collapsed"/>
+                    <Button x:Name="BtnDirStatus"
+                            Content="📌  Статусы"
+                            Style="{StaticResource SideMenuBtn}"
+                            Click="BtnDirStatus_Click"
+                            Visibility="Collapsed"/>
+                    <Button x:Name="BtnDirPriority"
+                            Content="⚡  Приоритеты"
+                            Style="{StaticResource SideMenuBtn}"
+                            Click="BtnDirPriority_Click"
+                            Visibility="Collapsed"/>
+                    <Button x:Name="BtnDirEmployees"
+                            Content="🧑‍💼  Сотрудники"
+                            Style="{StaticResource SideMenuBtn}"
+                            Click="BtnDirEmployees_Click"
+                            Visibility="Collapsed"/>
+                </StackPanel>
+
+                <!-- Кнопка выхода внизу -->
+                <Button DockPanel.Dock="Bottom"
+                        Content="⬅  Выйти"
+                        Style="{StaticResource SideMenuBtn}"
+                        Margin="0,0,0,12"
+                        Click="BtnLogout_Click"/>
+
+                <UIElement/>
+            </DockPanel>
+        </Border>
+
+        <!-- ═══ Основная область (контент) ═══ -->
+        <Border Grid.Column="1" Padding="24">
+            <DockPanel>
+
+                <!-- Заголовок страницы -->
+                <TextBlock x:Name="TxtPageTitle"
+                           DockPanel.Dock="Top"
+                           Text="Заявки"
+                           FontSize="22" FontWeight="Bold"
+                           Foreground="{StaticResource TextDarkBrush}"
+                           Margin="0,0,0,16"/>
+
+                <!-- Панель инструментов -->
+                <Grid DockPanel.Dock="Top" Margin="0,0,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Поиск и фильтры -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <TextBox x:Name="TxtSearch"
+                                 Style="{StaticResource InputStyle}"
+                                 Width="220"
+                                 VerticalAlignment="Center"
+                                 Tag="Поиск по номеру или клиенту..."
+                                 TextChanged="TxtSearch_TextChanged"/>
+
+                        <!-- Фильтр исполнителя (только для admin/manager) -->
+                        <ComboBox x:Name="CmbExecutorFilter"
+                                  Style="{StaticResource ComboStyle}"
+                                  Width="200"
+                                  Margin="10,0,0,0"
+                                  VerticalAlignment="Center"
+                                  SelectionChanged="CmbExecutorFilter_SelectionChanged"
+                                  Visibility="Collapsed"/>
+
+                        <Button Content="Обновить"
+                                Style="{StaticResource NeutralButton}"
+                                Margin="10,0,0,0"
+                                Click="BtnRefresh_Click"/>
+                    </StackPanel>
+
+                    <!-- Кнопки действий -->
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Button x:Name="BtnAdd"
+                                Content="+ Новая заявка"
+                                Style="{StaticResource AccentButton}"
+                                Margin="0,0,8,0"
+                                Click="BtnAdd_Click"
+                                Visibility="Collapsed"/>
+                        <Button x:Name="BtnEdit"
+                                Content="✏ Редактировать"
+                                Style="{StaticResource NeutralButton}"
+                                Margin="0,0,8,0"
+                                Click="BtnEdit_Click"
+                                Visibility="Collapsed"/>
+                        <Button x:Name="BtnDelete"
+                                Content="🗑 Удалить"
+                                Style="{StaticResource DangerButton}"
+                                Margin="0,0,8,0"
+                                Click="BtnDelete_Click"
+                                Visibility="Collapsed"/>
+                        <Button x:Name="BtnChangeStatus"
+                                Content="Изменить статус"
+                                Style="{StaticResource SuccessButton}"
+                                Margin="0,0,8,0"
+                                Click="BtnChangeStatus_Click"
+                                Visibility="Collapsed"/>
+                        <Button Content="Подробнее"
+                                Style="{StaticResource NeutralButton}"
+                                Click="BtnDetails_Click"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Таблица заявок -->
+                <DataGrid x:Name="GridRequests"
+                          MouseDoubleClick="GridRequests_DoubleClick">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="№ заявки"       Binding="{Binding Number}"          Width="100"/>
+                        <DataGridTextColumn Header="Дата создания"  Binding="{Binding CreatedDateStr}"  Width="130"/>
+                        <DataGridTextColumn Header="Клиент"         Binding="{Binding ClientName}"      Width="160"/>
+                        <DataGridTextColumn Header="Телефон"        Binding="{Binding ClientPhone}"     Width="120"/>
+                        <DataGridTextColumn Header="Тип техники"    Binding="{Binding EquipmentTypeName}" Width="140"/>
+                        <DataGridTextColumn Header="Приоритет"      Binding="{Binding PriorityName}"    Width="90"/>
+                        <DataGridTextColumn Header="Статус"         Binding="{Binding StatusName}"      Width="110"/>
+                        <DataGridTextColumn Header="Исполнитель"    Binding="{Binding ExecutorName}"    Width="150"/>
+                        <DataGridTextColumn Header="Завершение"     Binding="{Binding CompletionDateStr}" Width="100"/>
+                    </DataGrid.Columns>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding PriorityLevel}" Value="4">
+                                    <Setter Property="Background" Value="#FFEBEE"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding PriorityLevel}" Value="3">
+                                    <Setter Property="Background" Value="#FFF8E1"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                </DataGrid>
+
+            </DockPanel>
+        </Border>
+
+    </Grid>
+</Window>

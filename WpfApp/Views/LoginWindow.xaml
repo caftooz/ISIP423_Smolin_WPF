@@ -1,0 +1,104 @@
+<Window x:Class="ServiceDesk.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ServiceDesk — Вход"
+        Height="700" Width="400"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="{StaticResource PrimaryBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Карточка входа -->
+        <Border Grid.Row="0"
+                Background="White"
+                CornerRadius="12"
+                Margin="30,40,30,30"
+                Effect="{x:Null}">
+            <StackPanel Margin="35,30">
+
+                <!-- Логотип / заголовок -->
+                <Border Background="{StaticResource AccentBrush}"
+                        CornerRadius="50"
+                        Width="70" Height="70"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,20">
+                    <TextBlock Text="🔧" FontSize="32"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+                </Border>
+
+                <TextBlock Text="Учёт заявок"
+                           FontSize="22" FontWeight="Bold"
+                           Foreground="{StaticResource TextDarkBrush}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,4"/>
+                <TextBlock Text="на обслуживание техники"
+                           FontSize="12"
+                           Foreground="{StaticResource TextMutedBrush}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,28"/>
+
+                <!-- Логин -->
+                <TextBlock Text="Логин" Style="{StaticResource FormLabel}"/>
+                <TextBox x:Name="TxtLogin"
+                         Style="{StaticResource InputStyle}"
+                         Margin="0,0,0,16"/>
+
+                <!-- Пароль -->
+                <TextBlock Text="Пароль" Style="{StaticResource FormLabel}"/>
+                <PasswordBox x:Name="TxtPassword"
+                             FontSize="13"
+                             FontFamily="Segoe UI"
+                             Padding="8,6"
+                             BorderBrush="{StaticResource BorderBrush2}"
+                             Margin="0,0,0,8"/>
+
+                <!-- Ошибка -->
+                <TextBlock x:Name="TxtError"
+                           Foreground="{StaticResource DangerBrush}"
+                           FontSize="12"
+                           TextWrapping="Wrap"
+                           Visibility="Collapsed"
+                           Margin="0,0,0,12"/>
+
+                <!-- Строка подключения -->
+                <Expander Header="Настройки подключения" Margin="0,0,0,16" FontSize="12">
+                    <StackPanel Margin="0,8,0,0">
+                        <TextBlock Text="Строка подключения:" Style="{StaticResource FormLabel}"/>
+                        <TextBox x:Name="TxtConnString"
+                                 Style="{StaticResource InputStyle}"
+                                 Text="Host=localhost;Port=5432;Database=servicedesk;Username=postgres;Password=0909"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="False"
+                                 Margin="0,0,0,6"/>
+                        <Button Content="Проверить соединение"
+                                Style="{StaticResource NeutralButton}"
+                                Click="BtnTestConn_Click"
+                                Padding="10,5"
+                                FontSize="12"/>
+                    </StackPanel>
+                </Expander>
+
+                <Button x:Name="BtnLogin"
+                        Content="ВОЙТИ"
+                        Style="{StaticResource AccentButton}"
+                        FontSize="14" FontWeight="SemiBold"
+                        Padding="0,12"
+                        Click="BtnLogin_Click"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Копирайт -->
+        <TextBlock Grid.Row="1"
+                   Text="ServiceDesk v1.0"
+                   Foreground="#99FFFFFF"
+                   FontSize="11"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,10"/>
+    </Grid>
+</Window>
