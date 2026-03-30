@@ -2,10 +2,11 @@
 
 ## Содержимое таблицы Users в СУБД Microsoft SQL Server
 
+<img width="793" height="103" alt="Снимок экрана 2026-03-30 200018" src="https://github.com/user-attachments/assets/0749ad4c-2574-4528-bc8b-e5fb3108482c" />
 
 ## Скриншот окна «Обозреватель тестов»
 
-
+<img width="1941" height="961" alt="Снимок экрана 2026-03-30 202501" src="https://github.com/user-attachments/assets/8f0e3cd0-b68c-4620-84d6-3a148b3f20bf" />
 
 ## Описание тестов
 
