@@ -27,37 +27,15 @@ namespace WpfApp.Pages
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            if (String.IsNullOrEmpty(EmailBox.Text) || String.IsNullOrEmpty(LoginBox.Text) ||
-                String.IsNullOrEmpty(PassBox.Password) || String.IsNullOrEmpty(PassRepBox.Password))
-            {
-                MessageBox.Show("Все поля должны быть заполнены");
-                return;
-            }
-            if (Core.Context.Users.Any(u => u.Email == EmailBox.Text))
-            {
-                MessageBox.Show("Пользователь с такой почтой уже существует");
-                return;
-            }
-            if (Core.Context.Users.Any(u => u.Login == LoginBox.Text))
-            {
-                MessageBox.Show("Пользователь с таким логином уже существует");
-                return;
-            }
-            if (PassBox.Password != PassRepBox.Password)
-            {
-                MessageBox.Show("Пароли не совпадают");
-                return;
-            }
-            Users newUser = new Users() 
-            { 
-                Login = LoginBox.Text,
-                Email = EmailBox.Text,
-                Password = PassBox.Password
-            };
-            Core.Context.Users.Add(newUser);
-            Core.Context.SaveChanges();
+            string result = RegistrationService.Register(
+                LoginBox.Text, PassBox.Password, PassRepBox.Password, EmailBox.Text);
 
-            Core.UserID = newUser.Id;
+            if (result != null)
+            {
+                MessageBox.Show(result);
+                return;
+            }
+
             NavigationService.Navigate(new HomePage());
         }
     }

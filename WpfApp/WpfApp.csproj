@@ -80,6 +80,9 @@
     <Compile Include="AgeRatings.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="AuthService.cs" />
+    <Compile Include="CaptchaService.cs" />
+    <Compile Include="RegistrationService.cs" />
     <Compile Include="Classifications.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
