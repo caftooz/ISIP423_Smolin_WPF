@@ -4,9 +4,51 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp"
+        xmlns:vm="clr-namespace:WpfApp.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="900">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Style="{StaticResource Header}"
+                Visibility="{Binding IsClientOrNoLoggedIn,
+                Converter={StaticResource BoolToVisibility}}">
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="Услуги"
+                            Command="{Binding GoToServicesCommand}"/>
+                    <Button Content="Товары"
+                            Command="{Binding GoToProductsCommand}"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="вход"
+                            Command="{Binding GoToLoginCommand}"
+                            Visibility="{Binding IsLoggedIn,
+                            Converter={StaticResource InverseBoolToVisibility}}"/>
+                    <Button Content="профиль"
+                            Command="{Binding GoToProfileCommand}"
+                            Visibility="{Binding IsLoggedIn,
+                            Converter={StaticResource BoolToVisibility}}"/>
+                    <Button Content="корзина"
+                            Command="{Binding GoToCartCommand}"
+                            Visibility="{Binding IsLoggedIn,
+                            Converter={StaticResource BoolToVisibility}}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Visibility="{Binding IsClientOrNoLoggedIn,
+                Converter={StaticResource InverseBoolToVisibility}}">
+            
+        </Border>
         
+        <Frame Grid.Row="1" x:Name="MainFrame" Source="\Views\ServicesPage.xaml" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

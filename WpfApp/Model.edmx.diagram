@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3a259615294f4fd0856f2c14f8fbec97" Name="Diagram1">
+        <EntityTypeShape EntityType="pr17_DBModel.Appointments" Width="1.5" PointX="5.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.AppointmentSchedules" Width="1.5" PointX="10.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.CartItems" Width="1.5" PointX="8.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.DaysOfWeek" Width="1.5" PointX="8.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.Manufacturers" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.MasterServices" Width="1.5" PointX="8.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.OrderProducts" Width="1.5" PointX="7.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.Orders" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.PaymentMethods" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.Products" Width="1.5" PointX="5.25" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.ProductTypes" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.Services" Width="1.5" PointX="6" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.ServiceTypes" Width="1.5" PointX="3.75" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.sysdiagrams" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.UserRoles" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="pr17_DBModel.Users" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <AssociationConnector Association="pr17_DBModel.FK_Appointments_PaymentMethods" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_Appointments_Services" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_Appointments_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_Appointments_Users1" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_AppointmentSchedules_DaysOfWeek" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_AppointmentSchedules_MasterServices" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_CartItems_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_CartItems_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_Products_Manufacturers" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_MasterServices_Services" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_MasterServices_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_OrderProducts_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_OrderProducts_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_Orders_PaymentMethods" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_Orders_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_Products_ProductTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_Services_ServiceTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="pr17_DBModel.FK_Users_UserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

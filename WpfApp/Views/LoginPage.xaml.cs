@@ -13,23 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApp
+namespace WpfApp.Views
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для LoginPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoginPage : Page
     {
-        private static Frame _mainFrame;
-        public MainWindow()
+        public LoginPage()
         {
             InitializeComponent();
-            _mainFrame = MainFrame;
-        }
-
-        public static void NavigateTo(Page page)
-        {
-            _mainFrame.NavigationService.Navigate(page);
         }
     }
 }

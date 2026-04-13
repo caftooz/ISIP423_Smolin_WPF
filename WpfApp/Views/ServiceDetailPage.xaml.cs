@@ -12,24 +12,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp.ViewModels;
 
-namespace WpfApp
+namespace WpfApp.Views
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для ServiceDetailPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ServiceDetailPage : Page
     {
-        private static Frame _mainFrame;
-        public MainWindow()
+        public ServiceDetailPage(Services service)
         {
             InitializeComponent();
-            _mainFrame = MainFrame;
-        }
-
-        public static void NavigateTo(Page page)
-        {
-            _mainFrame.NavigationService.Navigate(page);
+            var vm = (ServiceDetailViewModel)DataContext;
+            vm.CurrentService = service;
         }
     }
 }
