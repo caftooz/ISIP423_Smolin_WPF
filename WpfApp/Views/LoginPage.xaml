@@ -20,6 +20,8 @@
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center">
             <StackPanel>
+                <Button Content="Назад"
+                        Command="{Binding BackCommand}"/>
                 <TextBlock Text="{Binding PhoneNumber}" 
                            Visibility="{Binding ShowPhoneStep, 
                            Converter={StaticResource InverseBoolToVisibility}}"/>

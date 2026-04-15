@@ -28,7 +28,6 @@ namespace WpfApp.ViewModels
             set
             {
                 _selectedService = value;
-                OnPropertyChanged();
                 if (value != null)
                     MainWindow.NavigateTo(new ServiceDetailPage(value));
             }

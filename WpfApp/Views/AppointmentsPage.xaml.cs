@@ -12,26 +12,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp.ViewModels;
 
-namespace WpfApp
+namespace WpfApp.Views
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для AppointmentsPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AppointmentsPage : Page
     {
-        private static Frame _mainFrame;
-        public MainWindow()
+        public AppointmentsPage(Services service, Users master)
         {
             InitializeComponent();
-            _mainFrame = MainFrame;
-        }
+            var vm = (AppointmentsViewModel)DataContext;
 
-        public static void GoBack() => _mainFrame.GoBack();
+            vm.CurrentMaster = master;
+            vm.CurrentService = service;
 
-        public static void NavigateTo(Page page)
-        {
-            _mainFrame.NavigationService.Navigate(page);
+            vm.UpdateAppointments();
         }
     }
 }

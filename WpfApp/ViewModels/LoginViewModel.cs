@@ -159,6 +159,12 @@ namespace WpfApp.ViewModels
 
             BackCommand = new RelayCommand(_ =>
             {
+                if (ShowPhoneStep)
+                {
+                    MainWindow.GoBack();
+                    return;
+                }
+
                 Password = null;
                 FirstName = null;
                 LastName = null;

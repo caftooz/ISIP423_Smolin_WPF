@@ -32,7 +32,8 @@
                 </Grid>
                 <ListBox Background="Transparent" BorderThickness="0"
                          HorizontalAlignment="Center"
-                         ItemsSource="{Binding ServiceMasters}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                         ItemsSource="{Binding ServiceMasters}" d:ItemsSource="{d:SampleData ItemCount=5}"
+                         SelectedItem="{Binding SelectedMaster}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Border BorderBrush="Black"

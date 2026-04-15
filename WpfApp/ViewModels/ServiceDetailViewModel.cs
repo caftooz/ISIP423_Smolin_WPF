@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApp.Views;
 
 namespace WpfApp.ViewModels
 {
@@ -17,6 +18,20 @@ namespace WpfApp.ViewModels
             get => _currentService;
             set { _currentService = value; OnPropertyChanged(); SetServiceMasters(); }
         }
+
+        private Users _selectedMaster;
+        public Users SelectedMaster
+        {
+            get => _selectedMaster;
+            set
+            {
+                _selectedMaster = value;
+                OnPropertyChanged();
+                if (value != null)
+                    MainWindow.NavigateTo(new AppointmentsPage(CurrentService, value));
+            }
+        }
+
 
         public ObservableCollection<Users> ServiceMasters { get; } = new ObservableCollection<Users>();
         private void SetServiceMasters()
