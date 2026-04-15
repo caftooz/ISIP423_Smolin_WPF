@@ -4,11 +4,78 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfApp.Views"
+      xmlns:vm="clr-namespace:WpfApp.ViewModels"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LoginPage">
 
+    <Page.DataContext>
+        <vm:LoginViewModel/>
+    </Page.DataContext>
+    
     <Grid>
+
+        <Border Background="LightGray" CornerRadius="5"
+                Width="360" Padding="10"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="{Binding PhoneNumber}" 
+                           Visibility="{Binding ShowPhoneStep, 
+                           Converter={StaticResource InverseBoolToVisibility}}"/>
+
+
+                <!-- Шаг 1: Ввод номера телефона -->
+                <StackPanel VerticalAlignment="Center"
+                Visibility="{Binding ShowPhoneStep, 
+                Converter={StaticResource BoolToVisibility}}">
+                    <TextBlock  Text="Номер телефона"/>
+                    <TextBox x:Name="PhoneBox"
+                         MaxLength="18"
+                         TextChanged="PhoneBox_TextChanged"/>
+                    <Button Width="100" 
+                        Command="{Binding ContinueCommand}"  Content="Продолжить"/>
+                </StackPanel>
+
+                <!-- Шаг 2(а): Вход -->
+                <StackPanel VerticalAlignment="Center"
+                            Visibility="{Binding ShowLoginStep, 
+                            Converter={StaticResource BoolToVisibility}}">
+                    <TextBlock  Text="Пароль"/>
+                    <PasswordBox x:Name="PasswordBox" 
+                                 PasswordChanged="PasswordBox_PasswordChanged"/>
+                    <Button Command="{Binding LoginCommand}" 
+                        Width="100" Content="Войти"/>
+                </StackPanel>
+
+                <!-- Шаг 2(б): Регистрация -->
+                <StackPanel VerticalAlignment="Center"
+                            Visibility="{Binding ShowRegisterStep, 
+                            Converter={StaticResource BoolToVisibility}}">
+
+                    <TextBlock  Text="Имя"/>
+                    <TextBox Text="{Binding FirstName}"/>
+                    
+                    <TextBlock  Text="Фамилия"/>
+                    <TextBox Text="{Binding LastName}"/>
+                    
+                    <TextBlock  Text="Отчество"/>
+                    <TextBox Text="{Binding Patronymic}"/>
+
+                    <TextBlock  Text="Придумайте пароль"/>
+                    <PasswordBox x:Name="RegPasswordBox" PasswordChanged="RegPasswordBox_PasswordChanged"/>
+                    <Button Command="{Binding RegisterCommand}"
+                            Width="100" Content="Войти"/>
+                </StackPanel>
+
+                <!-- Сообщение об ошибке -->
+                <Border Visibility="{Binding ErrorMessage,
+                        Converter={StaticResource NullToVisibilityConverter}}">
+                    <TextBlock Text="{Binding ErrorMessage}"/>
+                </Border>
+                
+            </StackPanel>
+        </Border>
         
     </Grid>
 </Page>

@@ -6,5 +6,5 @@
         <Setter Property="Background" Value="White"/>
         <Setter Property="BorderBrush" Value="GhostWhite"/>
     </Style>
-    
+
 </ResourceDictionary>
