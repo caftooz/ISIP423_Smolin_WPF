@@ -11,27 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WpfApp.ViewModels;
 
 namespace WpfApp.Views
 {
     /// <summary>
-    /// Логика взаимодействия для ProductDetailWindow.xaml
+    /// Логика взаимодействия для OrderWindow.xaml
     /// </summary>
-    public partial class ProductDetailWindow : Window
+    public partial class OrderWindow : Window
     {
-        public ProductDetailWindow(ProductModel product)
+        public OrderWindow()
         {
             InitializeComponent();
-            var vm = (ProductDetailViewModel)DataContext;
-            vm.Product = product;
-
-            vm.OnGoToLogin += () =>
-            {
-                Close();
-            };
-
-            vm.Init();
         }
     }
 }

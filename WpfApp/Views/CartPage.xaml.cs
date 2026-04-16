@@ -10,28 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfApp.ViewModels;
 
 namespace WpfApp.Views
 {
     /// <summary>
-    /// Логика взаимодействия для ProductDetailWindow.xaml
+    /// Логика взаимодействия для CartPage.xaml
     /// </summary>
-    public partial class ProductDetailWindow : Window
+    public partial class CartPage : Page
     {
-        public ProductDetailWindow(ProductModel product)
+        public CartPage()
         {
             InitializeComponent();
-            var vm = (ProductDetailViewModel)DataContext;
-            vm.Product = product;
-
-            vm.OnGoToLogin += () =>
-            {
-                Close();
-            };
-
-            vm.Init();
         }
     }
 }

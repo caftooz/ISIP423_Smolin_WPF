@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using WpfApp.Views;
 
 namespace WpfApp.ViewModels
@@ -32,8 +33,6 @@ namespace WpfApp.ViewModels
             set { _selectedSortedType = value; OnPropertyChanged(); UpdateProducts(); }
         }
 
-        private ProductDetailWindow window;
-
         private ProductModel _selectedProduct;
         public ProductModel SelectedProduct
         {
@@ -41,11 +40,21 @@ namespace WpfApp.ViewModels
             set
             {
                 _selectedProduct = value;
-                if (_selectedProduct.Product == null)
+                OnPropertyChanged();
+                var product = _selectedProduct;
+                
+                if (product == null)
                     return;
-                window = new ProductDetailWindow(_selectedProduct);
+
+                var window = new ProductDetailWindow(product);
                 window.Owner = Application.Current.MainWindow;
                 window.ShowDialog();
+
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _selectedProduct = null;
+                    OnPropertyChanged(nameof(SelectedProduct));
+                }));
             }
         }
 

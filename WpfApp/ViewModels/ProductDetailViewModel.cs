@@ -46,14 +46,44 @@ namespace WpfApp.ViewModels
         public ICommand IncreaseCountCommand { get; }
         public ICommand DecreaseCountCommand { get; }
 
-        public ProductDetailViewModel()
+        public void Init()
         {
             QuantityInCart = 0;
+            if(!SessionManager.IsLoggedIn)
+            {
+                return;
+            }
             if (Core.Context.CartItems.Any(c => c.UserClientId == SessionManager.CurrentUser.Id && c.ProductId == Product.Product.Id))
             {
                 var cartItem = Core.Context.CartItems.First(c => c.UserClientId == SessionManager.CurrentUser.Id && c.ProductId == Product.Product.Id);
                 QuantityInCart = cartItem.Quantity;
             }
+        }
+
+        public ProductDetailViewModel()
+        {
+            IncreaseCountCommand = new RelayCommand(_ =>
+            {
+                if (Core.Context.CartItems.Any(c => c.UserClientId == SessionManager.CurrentUser.Id && c.ProductId == Product.Product.Id))
+                {
+                    var cartItem = Core.Context.CartItems.First(c => c.UserClientId == SessionManager.CurrentUser.Id && c.ProductId == Product.Product.Id);
+                    cartItem.Quantity++;
+                    Core.Context.SaveChanges();
+                    QuantityInCart = cartItem.Quantity;
+                    return;
+                }
+            });
+            DecreaseCountCommand = new RelayCommand(_ =>
+            {
+                if (Core.Context.CartItems.Any(c => c.UserClientId == SessionManager.CurrentUser.Id && c.ProductId == Product.Product.Id))
+                {
+                    var cartItem = Core.Context.CartItems.First(c => c.UserClientId == SessionManager.CurrentUser.Id && c.ProductId == Product.Product.Id);
+                    cartItem.Quantity--;
+                    Core.Context.SaveChanges();
+                    QuantityInCart = cartItem.Quantity;
+                    return;
+                }
+            });
 
             ToCartCommand = new RelayCommand(_ =>
             {
@@ -79,6 +109,7 @@ namespace WpfApp.ViewModels
                     cartItem.Quantity++;
                     Core.Context.SaveChanges();
                     MessageBox.Show("Этот товар уже есть в корзине. Кол-во товара в корзине увеличено на 1", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                    QuantityInCart = cartItem.Quantity;
                     return;
                 }
 
@@ -88,6 +119,9 @@ namespace WpfApp.ViewModels
                     UserClientId = SessionManager.CurrentUser.Id,
                     Quantity = 1
                 });
+                QuantityInCart = 1;
+                Core.Context.SaveChanges();
+
 
                 MessageBox.Show("Товар успешно добавлен в корзину", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             });

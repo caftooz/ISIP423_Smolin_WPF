@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using WpfApp.Commands;
+
+namespace WpfApp.ViewModels
+{
+    public class CartViewModel : INotifyPropertyChanged
+    {
+        public ObservableCollection<CartItemViewModel> Items { get; } = new ObservableCollection<CartItemViewModel>();
+
+        public CartViewModel()
+        {
+            var items = Core.Context.CartItems
+                .Where(c => c.UserClientId == SessionManager.CurrentUser.Id)
+                .ToList();
+
+            foreach (var ci in items)
+                Items.Add(new CartItemViewModel(ci, this));
+
+            OrderCommand = new RelayCommand(_ => PlaceOrder());
+            RecalculateTotals();
+        }
+
+        public int ItemCount => Items.Sum(i => i.Quantity);
+        public decimal TotalPrice => Items.Sum(i => i.Product.Price * i.Quantity);
+        public decimal FinalPrice => Items.Sum(i => i.Product.FinalPrice * i.Quantity);
+        public decimal DiscountAmount => TotalPrice - FinalPrice;
+
+        public ICommand OrderCommand { get; }
+
+        public void RecalculateTotals()
+        {
+            OnPropertyChanged(nameof(ItemCount));
+            OnPropertyChanged(nameof(TotalPrice));
+            OnPropertyChanged(nameof(FinalPrice));
+            OnPropertyChanged(nameof(DiscountAmount));
+        }
+
+        public void RemoveItem(CartItemViewModel item)
+        {
+            Items.Remove(item);
+            RecalculateTotals();
+        }
+
+        private void PlaceOrder() {  }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
+}
