@@ -6,17 +6,17 @@
     <Page.DataContext>
         <vm:ManagerAppointmentsViewModel/>
     </Page.DataContext>
-    <Grid Margin="10">
+    <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-            <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,0,5,0"/>
-            <Button Content="Записать клиента" Command="{Binding AddCommand}"/>
+            <TextBox Style="{StaticResource MainTextBox}" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,0,5,0"/>
+            <Button Content="Записать клиента" Style="{StaticResource AccentButton}" Command="{Binding AddCommand}"/>
         </StackPanel>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Items}" AutoGenerateColumns="False"
-                  CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single">
+        <DataGrid Style="{StaticResource MainDataGrid}" Grid.Row="1" ItemsSource="{Binding Items}"
+                 >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Дата" Binding="{Binding AppointmentDateTime, StringFormat='dd.MM.yyyy'}" Width="90"/>
                 <DataGridTextColumn Header="Время" Width="60">
@@ -39,10 +39,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="завершить" Margin="2"
+                                <Button Content="завершить" Style="{StaticResource AccentButton}" Margin="2"
                                         Command="{Binding DataContext.CompleteCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                         CommandParameter="{Binding}"/>
-                                <Button Content="перенести" Margin="2"
+                                <Button Content="перенести" Style="{StaticResource MainButton}" Margin="2"
                                         Command="{Binding DataContext.RescheduleCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                         CommandParameter="{Binding}"/>
                             </StackPanel>

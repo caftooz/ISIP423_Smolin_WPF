@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
+using WpfApp.Commands;
 using WpfApp.Views;
 
 namespace WpfApp.ViewModels
@@ -32,6 +30,7 @@ namespace WpfApp.ViewModels
             }
         }
 
+        public ICommand BackCommand { get; }
 
         public ObservableCollection<Users> ServiceMasters { get; } = new ObservableCollection<Users>();
         private void SetServiceMasters()
@@ -41,14 +40,17 @@ namespace WpfApp.ViewModels
                                                 .Select(ms => ms.Users);
             ServiceMasters.Clear();
             foreach (var user in users)
-            {
                 ServiceMasters.Add(user);
-            }
             OnPropertyChanged(nameof(ServiceMasters));
         }
 
+        public ServiceDetailViewModel()
+        {
+            BackCommand = new RelayCommand(_ => MainWindow.GoBack());
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string name = null) 
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

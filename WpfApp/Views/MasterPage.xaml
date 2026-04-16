@@ -1,0 +1,85 @@
+<Page x:Class="WpfApp.Views.MasterPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:vm="clr-namespace:WpfApp.ViewModels"
+      Title="MasterPage">
+    <Page.DataContext>
+        <vm:MasterPageViewModel/>
+    </Page.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Style="{StaticResource Header}">
+            <Grid>
+                <TextBlock Style="{StaticResource SubtitleText}" VerticalAlignment="Center">
+                    <Run Text="{Binding CurrentUser.LastName, Mode=OneWay}"/>
+                    <Run Text=" "/><Run Text="{Binding CurrentUser.FirstName, Mode=OneWay}"/>
+                    <Run Text=" "/><Run Text="{Binding CurrentUser.Patronymic, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock Style="{StaticResource CaptionText}" VerticalAlignment="Center" Margin="0,18,0,0"
+                           Text="{Binding CurrentUser.PhoneNumber}"/>
+                <Button Content="Выйти из аккаунта" Style="{StaticResource MainButton}"
+                        HorizontalAlignment="Right" Command="{Binding LogoutCommand}"/>
+            </Grid>
+        </Border>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,10,0,0">
+            <Button Content="Услуги" Style="{StaticResource MainButton}" Command="{Binding ShowServicesTabCommand}"/>
+            <Button Content="Записи" Style="{StaticResource MainButton}" Command="{Binding ShowAppointmentsTabCommand}"/>
+        </StackPanel>
+
+        <!-- Services Tab -->
+        <ListBox Grid.Row="2" ItemsSource="{Binding MasterServiceItems}" Style="{StaticResource MainListBox}"
+                 Margin="20,10"
+                 Visibility="{Binding ShowServicesTab, Converter={StaticResource BoolToVisibility}}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource CardBorder}" Width="400">
+                        <Grid>
+                            <TextBlock Style="{StaticResource BodyText}" Text="{Binding ServiceName}"
+                                       VerticalAlignment="Center"/>
+                            <CheckBox Style="{StaticResource ToggleSwitch}" HorizontalAlignment="Right"
+                                      IsChecked="{Binding IsActive}" IsEnabled="False"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- Appointments Tab -->
+        <ListBox Grid.Row="2" ItemsSource="{Binding MasterAppointments}" Style="{StaticResource MainListBox}"
+                 Margin="20,10"
+                 Visibility="{Binding ShowAppointmentsTab, Converter={StaticResource BoolToVisibility}}"
+                 SelectedItem="{Binding SelectedAppointment}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource CardBorder}" Width="500">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource BodyText}" Text="{Binding Services.Name}"
+                                       VerticalAlignment="Center" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="1" Style="{StaticResource BodyText}" VerticalAlignment="Center" Margin="15,0">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0:00}:{1:00}">
+                                        <Binding Path="AppointmentDateTime.Hour"/>
+                                        <Binding Path="AppointmentDateTime.Minute"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock Grid.Column="2" Style="{StaticResource BodyText}" VerticalAlignment="Center"
+                                       Text="{Binding AppointmentDateTime, StringFormat='dd.MM.yyyy'}"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Page>

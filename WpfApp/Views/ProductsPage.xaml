@@ -1,118 +1,83 @@
-﻿<Page x:Class="WpfApp.Views.ProductsPage"
+<Page x:Class="WpfApp.Views.ProductsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WpfApp.Views"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="clr-namespace:WpfApp.ViewModels"
-      mc:Ignorable="d" 
-      Loaded="Page_Loaded"
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="ProductsPage">
-
+      mc:Ignorable="d" Loaded="Page_Loaded" Title="ProductsPage">
     <Page.DataContext>
         <vm:ProductsViewModel/>
     </Page.DataContext>
-    
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="180"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <Border Style="{StaticResource SidebarBorder}" Padding="8">
+            <TreeView BorderThickness="0" Background="Transparent">
+                <TreeViewItem Header="Тип" ItemsSource="{Binding ProductTypes}">
+                    <TreeViewItem.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <CheckBox Style="{StaticResource MainCheckBox}" IsChecked="{Binding Path=IsActive}"/>
+                                <TextBlock Style="{StaticResource BodyText}" VerticalAlignment="Center" Text="{Binding Path=Item.Name}"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </TreeViewItem.ItemTemplate>
+                </TreeViewItem>
+                <TreeViewItem Header="Производитель" ItemsSource="{Binding Manufacturers}">
+                    <TreeViewItem.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <CheckBox Style="{StaticResource MainCheckBox}" IsChecked="{Binding Path=IsActive}"/>
+                                <TextBlock Style="{StaticResource BodyText}" VerticalAlignment="Center" Text="{Binding Path=Item.Name}"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </TreeViewItem.ItemTemplate>
+                </TreeViewItem>
+            </TreeView>
+        </Border>
 
-        <TreeView BorderThickness="0" Background="Transparent">
-            <TreeViewItem Header="Тип" ItemsSource="{Binding ProductTypes}">
-                <TreeViewItem.ItemTemplate>
-                    <DataTemplate>
-                        <DockPanel>
-                            <CheckBox IsChecked="{Binding Path=IsActive}"/>
-                            <TextBlock VerticalAlignment="center" Text ="{Binding Path=Item.Name}"/>
-                        </DockPanel>
-                    </DataTemplate>
-                </TreeViewItem.ItemTemplate>
-            </TreeViewItem>
-            <TreeViewItem Header="Производитель" ItemsSource="{Binding Manufacturers}">
-                <TreeViewItem.ItemTemplate>
-                    <DataTemplate>
-                        <DockPanel>
-                            <CheckBox IsChecked="{Binding Path=IsActive}"/>
-                            <TextBlock VerticalAlignment="Center" Text ="{Binding Path=Item.Name}"/>
-                        </DockPanel>
-                    </DataTemplate>
-                </TreeViewItem.ItemTemplate>
-            </TreeViewItem>
-        </TreeView>
-
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Margin="15,10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
-            <Grid>
+            <Grid Margin="0,0,0,8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="150"/>
                 </Grid.ColumnDefinitions>
-                        <StackPanel>
-                    <TextBlock Text="Поиск"/>
-                    <TextBox Text="{Binding FindText, UpdateSourceTrigger=PropertyChanged}"/>
-                </StackPanel>
-                <StackPanel Grid.Column="1">
-                    <TextBlock Text="Сортировка"/>
-                    <ComboBox 
-                          ItemsSource="{Binding SortedType}"
-                          SelectedItem="{Binding SelectedSortedType}"
-                          SelectedIndex="1">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Value}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                </StackPanel>
+                <TextBox Style="{StaticResource MainTextBox}" Text="{Binding FindText, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox Grid.Column="1" Style="{StaticResource MainComboBox}" Margin="8,0,0,0"
+                          ItemsSource="{Binding SortedType}" SelectedItem="{Binding SelectedSortedType}" SelectedIndex="1">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate><TextBlock Text="{Binding Value}"/></DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </Grid>
-            <ListBox Grid.Row="1" ItemsSource="{Binding Products}"
-             x:Name="LListBox"  Validation.ErrorTemplate="{x:Null}" 
-             SelectedItem="{Binding SelectedProduct}"
-             SelectionMode="Single"
-             BorderThickness="0" Background="Transparent"
-             ScrollViewer.VerticalScrollBarVisibility="Hidden"
-             ScrollViewer.HorizontalScrollBarVisibility="Disabled" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListBox Grid.Row="1" ItemsSource="{Binding Products}" Style="{StaticResource MainListBox}"
+                     x:Name="LListBox" SelectedItem="{Binding SelectedProduct}" SelectionMode="Single"
+                     Validation.ErrorTemplate="{x:Null}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border Width="156"
-                        BorderThickness="2" BorderBrush="Black">
+                        <Border Style="{StaticResource CardBorder}" Width="160" Padding="0">
                             <StackPanel>
-                                <Image Source="{Binding Path=Image}"
-                               Stretch="UniformToFill" Height="156"/>
-
-                                <Border Background="White" BorderBrush="Black"
-                                BorderThickness="0,2,0,0"
-                                VerticalAlignment="Bottom">
-                                    <StackPanel>
-                                        <TextBlock Text="{Binding Path=FinalPrice}"/>
-                                        <TextBlock Text="{Binding Path=Price}"
-                                                   Visibility="{Binding Path=ShowDiscount, 
-                                            Converter={StaticResource BoolToVisibility}}"/>
-                                        <TextBlock Text="{Binding Path=PercentageDiscount, StringFormat={}{0}%}"
-                                                   Visibility="{Binding Path=ShowDiscount, 
-                                            Converter={StaticResource BoolToVisibility}}"/>
-                                        <TextBlock Text="{Binding Path=Name}"/>
-                                        <TextBlock Text="{Binding Path=Rating, StringFormat={}{0:0.0}!}"/>
-                                        <TextBlock Text="{Binding Path=ManufacturerName}"/>
-                                    </StackPanel>
-                                </Border>
+                                <Image Source="{Binding Path=Image}" Stretch="UniformToFill" Height="140"/>
+                                <StackPanel Margin="6,4">
+                                    <TextBlock Style="{StaticResource PriceText}" Text="{Binding Path=FinalPrice, StringFormat={}{0:0.00} ₽}"/>
+                                    <TextBlock Style="{StaticResource OldPriceText}" Text="{Binding Path=Price, StringFormat={}{0:0.00} ₽}"
+                                               Visibility="{Binding Path=ShowDiscount, Converter={StaticResource BoolToVisibility}}"/>
+                                    <TextBlock Style="{StaticResource BodyText}" Text="{Binding Path=Name}"/>
+                                    <TextBlock Style="{StaticResource CaptionText}" Text="{Binding Path=ManufacturerName}"/>
+                                </StackPanel>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
                 <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Width="500"/>
-                    </ItemsPanelTemplate>
+                    <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
         </Grid>

@@ -6,7 +6,7 @@
     <Page.DataContext>
         <vm:ManagerSchedulesViewModel/>
     </Page.DataContext>
-    <Grid Margin="10">
+    <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -16,15 +16,15 @@
         <!-- Master selection -->
         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
             <TextBlock Text="Мастер:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <ComboBox ItemsSource="{Binding Masters}" SelectedItem="{Binding SelectedMaster}" Width="250">
+            <ComboBox Style="{StaticResource MainComboBox}" ItemsSource="{Binding Masters}" SelectedItem="{Binding SelectedMaster}" Width="250">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock>
-                            <Run Text="{Binding LastName}"/>
+                            <Run Text="{Binding LastName, Mode=OneWay}"/>
                             <Run Text=" "/>
-                            <Run Text="{Binding FirstName}"/>
+                            <Run Text="{Binding FirstName, Mode=OneWay}"/>
                             <Run Text=" "/>
-                            <Run Text="{Binding Patronymic}"/>
+                            <Run Text="{Binding Patronymic, Mode=OneWay}"/>
                         </TextBlock>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
@@ -54,18 +54,18 @@
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                 <TextBlock Text="Услуга для расписания:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <ComboBox ItemsSource="{Binding MasterServicesList}" SelectedItem="{Binding SelectedMasterService}" Width="200">
+                <ComboBox Style="{StaticResource MainComboBox}" ItemsSource="{Binding MasterServicesList}" SelectedItem="{Binding SelectedMasterService}" Width="200">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Services.Name}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <Button Content="добавить запись" Command="{Binding AddScheduleCommand}" Margin="10,0,0,0"/>
+                <Button Content="добавить запись" Style="{StaticResource AccentButton}" Command="{Binding AddScheduleCommand}" Margin="10,0,0,0"/>
             </StackPanel>
 
-            <DataGrid Grid.Row="1" ItemsSource="{Binding Schedules}" AutoGenerateColumns="False"
-                      CanUserAddRows="False" IsReadOnly="True">
+            <DataGrid Grid.Row="1" ItemsSource="{Binding Schedules}"
+                     >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="День" Binding="{Binding DaysOfWeek.ShortName}" Width="60"/>
                     <DataGridTextColumn Header="Время" Width="80">

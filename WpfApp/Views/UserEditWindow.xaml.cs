@@ -3,13 +3,13 @@ using WpfApp.ViewModels;
 
 namespace WpfApp.Views
 {
-    public partial class ProductEditWindow : Window
+    public partial class UserEditWindow : Window
     {
-        public ProductEditWindow(Products product)
+        public UserEditWindow(Users user)
         {
             InitializeComponent();
-            var vm = (ProductEditWindowViewModel)DataContext;
-            vm.Init(product);
+            var vm = (UserEditViewModel)DataContext;
+            vm.Init(user);
             vm.RequestClose += r => { DialogResult = r; };
         }
     }

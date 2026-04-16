@@ -6,15 +6,15 @@
     <Page.DataContext>
         <vm:ManagerOrdersViewModel/>
     </Page.DataContext>
-    <Grid Margin="10">
+    <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="200"
+        <TextBox Style="{StaticResource MainTextBox}" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="200"
                  HorizontalAlignment="Left" Margin="0,0,0,8"/>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Items}" AutoGenerateColumns="False"
-                  CanUserAddRows="False" IsReadOnly="True">
+        <DataGrid Style="{StaticResource MainDataGrid}" Grid.Row="1" ItemsSource="{Binding Items}"
+                 >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Дата" Binding="{Binding OrderDateTime, StringFormat='dd.MM.yyyy'}" Width="90"/>
                 <DataGridTextColumn Header="Время" Width="60">
@@ -40,7 +40,7 @@
                 <DataGridTemplateColumn Header="Действия" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="выдать" Margin="2"
+                            <Button Content="выдать" Style="{StaticResource AccentButton}" Margin="2"
                                     Command="{Binding DataContext.CompleteCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                     CommandParameter="{Binding}"/>
                         </DataTemplate>

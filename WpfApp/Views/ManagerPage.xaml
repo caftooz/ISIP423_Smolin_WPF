@@ -1,61 +1,44 @@
 <Page x:Class="WpfApp.Views.ManagerPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:vm="clr-namespace:WpfApp.ViewModels"
-      mc:Ignorable="d" 
-      d:DesignHeight="550" d:DesignWidth="900"
       Title="ManagerPage">
-
-    <Page.DataContext>
-        <vm:ManagerViewModel/>
-    </Page.DataContext>
-
+    <Page.DataContext><vm:ManagerViewModel/></Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <!-- Header -->
-        <Border Style="{StaticResource Header}" Padding="10,6">
+        <Border Style="{StaticResource Header}">
             <Grid>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" FontSize="14">
-                        <Run Text="{Binding CurrentUser.LastName}"/>
-                        <Run Text=" "/>
-                        <Run Text="{Binding CurrentUser.FirstName}"/>
-                        <Run Text=" "/>
-                        <Run Text="{Binding CurrentUser.Patronymic}"/>
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SubtitleText}">
+                        <Run Text="{Binding CurrentUser.LastName, Mode=OneWay}"/>
+                        <Run Text=" "/><Run Text="{Binding CurrentUser.FirstName, Mode=OneWay}"/>
+                        <Run Text=" "/><Run Text="{Binding CurrentUser.Patronymic, Mode=OneWay}"/>
                     </TextBlock>
-                    <TextBlock Text="{Binding CurrentUser.PhoneNumber}" Margin="15,0,0,0"
-                               VerticalAlignment="Center" Foreground="Gray"/>
+                    <TextBlock Style="{StaticResource CaptionText}" Text="{Binding CurrentUser.PhoneNumber}"/>
                 </StackPanel>
-                <Button Content="Выйти из аккаунта" HorizontalAlignment="Right"
-                        Command="{Binding LogoutCommand}"/>
+                <Button Content="Выйти из аккаунта" Style="{StaticResource MainButton}" HorizontalAlignment="Right" Command="{Binding LogoutCommand}"/>
             </Grid>
         </Border>
-
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="170"/>
+                <ColumnDefinition Width="180"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
-            <!-- Sidebar -->
-            <StackPanel Background="#F0F0F0">
-                <Button Content="записи" Command="{Binding NavCommand}" CommandParameter="appointments" Margin="2,4"/>
-                <Button Content="заказы" Command="{Binding NavCommand}" CommandParameter="orders" Margin="2,2"/>
-                <Button Content="товары" Command="{Binding NavCommand}" CommandParameter="products" Margin="2,2"/>
-                <Button Content="производители" Command="{Binding NavCommand}" CommandParameter="manufacturers" Margin="2,2"/>
-                <Button Content="типы товаров" Command="{Binding NavCommand}" CommandParameter="productTypes" Margin="2,2"/>
-                <Button Content="услуги" Command="{Binding NavCommand}" CommandParameter="services" Margin="2,2"/>
-                <Button Content="типы услуг" Command="{Binding NavCommand}" CommandParameter="serviceTypes" Margin="2,2"/>
-                <Button Content="расписание мастеров" Command="{Binding NavCommand}" CommandParameter="schedules" Margin="2,2"/>
-            </StackPanel>
-
-            <!-- Content frame -->
+            <Border Style="{StaticResource SidebarBorder}">
+                <StackPanel Margin="0,5">
+                    <Button Content="записи" Style="{StaticResource NavButton}" Command="{Binding NavCommand}" CommandParameter="appointments"/>
+                    <Button Content="заказы" Style="{StaticResource NavButton}" Command="{Binding NavCommand}" CommandParameter="orders"/>
+                    <Button Content="товары" Style="{StaticResource NavButton}" Command="{Binding NavCommand}" CommandParameter="products"/>
+                    <Button Content="производители" Style="{StaticResource NavButton}" Command="{Binding NavCommand}" CommandParameter="manufacturers"/>
+                    <Button Content="типы товаров" Style="{StaticResource NavButton}" Command="{Binding NavCommand}" CommandParameter="productTypes"/>
+                    <Button Content="услуги" Style="{StaticResource NavButton}" Command="{Binding NavCommand}" CommandParameter="services"/>
+                    <Button Content="типы услуг" Style="{StaticResource NavButton}" Command="{Binding NavCommand}" CommandParameter="serviceTypes"/>
+                    <Button Content="расписание мастеров" Style="{StaticResource NavButton}" Command="{Binding NavCommand}" CommandParameter="schedules"/>
+                </StackPanel>
+            </Border>
             <Frame Grid.Column="1" x:Name="ManagerFrame" NavigationUIVisibility="Hidden"/>
         </Grid>
     </Grid>

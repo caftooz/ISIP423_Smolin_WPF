@@ -1,13 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
 using WpfApp.Commands;
 using WpfApp.Views;
 
@@ -53,9 +50,12 @@ namespace WpfApp.ViewModels
         }
 
         public ICommand MakeAnAppointment { get; }
+        public ICommand BackCommand { get; }
 
         public AppointmentDetailViewModel()
         {
+            BackCommand = new RelayCommand(_ => MainWindow.GoBack());
+
             MakeAnAppointment = new RelayCommand(_ =>
             {
                 ErrorMessage = null;
@@ -74,22 +74,18 @@ namespace WpfApp.ViewModels
                         UserClientId = SessionManager.CurrentUser.Id,
                         UserMasterId = MasterService.UserMasterId,
                         AppointmentDateTime = DateTime,
-                        CreatedDateTime = DateTime.Now,
+                        CreatedDateTime = System.DateTime.Now,
                         PaymentMethodId = SelectedPaymentMethod.Id,
                         Comment = this.Comment,
                         IsCompleted = false
                     };
-
                     Core.Context.Appointments.Add(appointment);
                     Core.Context.SaveChanges();
-
                     MessageBox.Show("Вы успешно записались", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-
                     MainWindow.NavigateTo(new ServicesPage());
                 }
             });
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)

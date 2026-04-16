@@ -23,6 +23,7 @@ namespace WpfApp.ViewModels
             foreach (var ci in items)
                 Items.Add(new CartItemViewModel(ci, this));
 
+            BackCommand = new RelayCommand(_ => MainWindow.GoBack());
             OrderCommand = new RelayCommand(_ => PlaceOrder());
             RecalculateTotals();
         }
@@ -33,6 +34,7 @@ namespace WpfApp.ViewModels
         public decimal DiscountAmount => TotalPrice - FinalPrice;
 
         public ICommand OrderCommand { get; }
+        public ICommand BackCommand { get; }
 
         public void RecalculateTotals()
         {

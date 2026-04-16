@@ -1,83 +1,49 @@
-﻿<Page x:Class="WpfApp.Views.LoginPage"
+<Page x:Class="WpfApp.Views.LoginPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WpfApp.Views"
       xmlns:vm="clr-namespace:WpfApp.ViewModels"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
       Title="LoginPage">
-
     <Page.DataContext>
         <vm:LoginViewModel/>
     </Page.DataContext>
-    
     <Grid>
-
-        <Border Background="LightGray" CornerRadius="5"
-                Width="360" Padding="10"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center">
+        <Border Style="{StaticResource FormBorder}" Width="380" VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel>
-                <Button Content="Назад"
-                        Command="{Binding BackCommand}"/>
-                <TextBlock Text="{Binding PhoneNumber}" 
-                           Visibility="{Binding ShowPhoneStep, 
-                           Converter={StaticResource InverseBoolToVisibility}}"/>
+                <Button Content="Назад" Style="{StaticResource MainButton}" HorizontalAlignment="Left" Command="{Binding BackCommand}"/>
+                <TextBlock Style="{StaticResource BodyText}" Text="{Binding PhoneNumber}" Margin="0,8,0,4"
+                           Visibility="{Binding ShowPhoneStep, Converter={StaticResource InverseBoolToVisibility}}"/>
 
-
-                <!-- Шаг 1: Ввод номера телефона -->
-                <StackPanel VerticalAlignment="Center"
-                Visibility="{Binding ShowPhoneStep, 
-                Converter={StaticResource BoolToVisibility}}">
-                    <TextBlock  Text="Номер телефона"/>
-                    <TextBox x:Name="PhoneBox"
-                         MaxLength="18"
-                         TextChanged="PhoneBox_TextChanged"/>
-                    <Button Width="100" 
-                        Command="{Binding ContinueCommand}"  Content="Продолжить"/>
+                <!-- Step 1: Phone -->
+                <StackPanel Visibility="{Binding ShowPhoneStep, Converter={StaticResource BoolToVisibility}}">
+                    <TextBlock Style="{StaticResource LabelText}" Text="Номер телефона"/>
+                    <TextBox x:Name="PhoneBox" Style="{StaticResource MainTextBox}" MaxLength="18" TextChanged="PhoneBox_TextChanged"/>
+                    <Button Content="Продолжить" Style="{StaticResource AccentButton}" Width="140" Margin="0,10,0,0" Command="{Binding ContinueCommand}"/>
                 </StackPanel>
 
-                <!-- Шаг 2(а): Вход -->
-                <StackPanel VerticalAlignment="Center"
-                            Visibility="{Binding ShowLoginStep, 
-                            Converter={StaticResource BoolToVisibility}}">
-                    <TextBlock  Text="Пароль"/>
-                    <PasswordBox x:Name="PasswordBox" 
-                                 PasswordChanged="PasswordBox_PasswordChanged"/>
-                    <Button Command="{Binding LoginCommand}" 
-                        Width="100" Content="Войти"/>
+                <!-- Step 2a: Login -->
+                <StackPanel Visibility="{Binding ShowLoginStep, Converter={StaticResource BoolToVisibility}}">
+                    <TextBlock Style="{StaticResource LabelText}" Text="Пароль"/>
+                    <PasswordBox x:Name="PasswordBox" Style="{StaticResource MainPasswordBox}" PasswordChanged="PasswordBox_PasswordChanged"/>
+                    <Button Content="Войти" Style="{StaticResource AccentButton}" Width="140" Margin="0,10,0,0" Command="{Binding LoginCommand}"/>
                 </StackPanel>
 
-                <!-- Шаг 2(б): Регистрация -->
-                <StackPanel VerticalAlignment="Center"
-                            Visibility="{Binding ShowRegisterStep, 
-                            Converter={StaticResource BoolToVisibility}}">
-
-                    <TextBlock  Text="Имя"/>
-                    <TextBox Text="{Binding FirstName}"/>
-                    
-                    <TextBlock  Text="Фамилия"/>
-                    <TextBox Text="{Binding LastName}"/>
-                    
-                    <TextBlock  Text="Отчество"/>
-                    <TextBox Text="{Binding Patronymic}"/>
-
-                    <TextBlock  Text="Придумайте пароль"/>
-                    <PasswordBox x:Name="RegPasswordBox" PasswordChanged="RegPasswordBox_PasswordChanged"/>
-                    <Button Command="{Binding RegisterCommand}"
-                            Width="100" Content="Войти"/>
+                <!-- Step 2b: Register -->
+                <StackPanel Visibility="{Binding ShowRegisterStep, Converter={StaticResource BoolToVisibility}}">
+                    <TextBlock Style="{StaticResource LabelText}" Text="ФИО"/>
+                    <TextBox Style="{StaticResource MainTextBox}" Text="{Binding FirstName}" Margin="0,0,0,4"/>
+                    <TextBlock Style="{StaticResource LabelText}" Text="Фамилия"/>
+                    <TextBox Style="{StaticResource MainTextBox}" Text="{Binding LastName}" Margin="0,0,0,4"/>
+                    <TextBlock Style="{StaticResource LabelText}" Text="Отчество"/>
+                    <TextBox Style="{StaticResource MainTextBox}" Text="{Binding Patronymic}" Margin="0,0,0,4"/>
+                    <TextBlock Style="{StaticResource LabelText}" Text="Придумайте пароль"/>
+                    <PasswordBox x:Name="RegPasswordBox" Style="{StaticResource MainPasswordBox}" PasswordChanged="RegPasswordBox_PasswordChanged"/>
+                    <Button Content="Создать аккаунт" Style="{StaticResource AccentButton}" Width="160" Margin="0,10,0,0" Command="{Binding RegisterCommand}"/>
                 </StackPanel>
 
-                <!-- Сообщение об ошибке -->
-                <Border Visibility="{Binding ErrorMessage,
-                        Converter={StaticResource NullToVisibilityConverter}}">
-                    <TextBlock Text="{Binding ErrorMessage}"/>
+                <Border Visibility="{Binding ErrorMessage, Converter={StaticResource NullToVisibilityConverter}}" Margin="0,8,0,0">
+                    <TextBlock Style="{StaticResource ErrorText}" Text="{Binding ErrorMessage}"/>
                 </Border>
-                
             </StackPanel>
         </Border>
-        
     </Grid>
 </Page>

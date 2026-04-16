@@ -6,24 +6,24 @@
     <Page.DataContext>
         <vm:ManagerProductTypesViewModel/>
     </Page.DataContext>
-    <Grid Margin="10">
+    <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-            <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,0,5,0"/>
-            <Button Content="добавить" Command="{Binding AddCommand}"/>
+            <TextBox Style="{StaticResource MainTextBox}" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,0,5,0"/>
+            <Button Content="добавить" Style="{StaticResource AccentButton}" Command="{Binding AddCommand}"/>
         </StackPanel>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Items}" AutoGenerateColumns="False"
-                  CanUserAddRows="False" IsReadOnly="True">
+        <DataGrid Style="{StaticResource MainDataGrid}" Grid.Row="1" ItemsSource="{Binding Items}"
+                 >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
                 <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="*"/>
                 <DataGridTemplateColumn Header="Действия" Width="100">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="изменить"
+                            <Button Content="изменить" Style="{StaticResource MainButton}"
                                     Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                     CommandParameter="{Binding}"/>
                         </DataTemplate>

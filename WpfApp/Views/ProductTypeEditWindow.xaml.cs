@@ -1,25 +1,20 @@
 using System.Windows;
+using WpfApp.ViewModels;
 namespace WpfApp.Views
 {
     public partial class ProductTypeEditWindow : Window
     {
-        private ProductTypes _item;
-        private bool _isNew;
         public ProductTypeEditWindow(ProductTypes item)
         {
             InitializeComponent();
-            _isNew = item == null;
-            _item = item ?? new ProductTypes();
-            if (!_isNew) NameBox.Text = _item.Name;
+            var vm = (SimpleNameEditViewModel)DataContext;
+            vm.Init(item == null ? "" : item.Name, name =>
+            {
+                if (item == null) { item = new ProductTypes(); Core.Context.ProductTypes.Add(item); }
+                item.Name = name;
+                Core.Context.SaveChanges();
+            });
+            vm.RequestClose += r => { DialogResult = r; };
         }
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(NameBox.Text)) { MessageBox.Show("Введите название"); return; }
-            _item.Name = NameBox.Text.Trim();
-            if (_isNew) Core.Context.ProductTypes.Add(_item);
-            Core.Context.SaveChanges();
-            DialogResult = true;
-        }
-        private void Cancel_Click(object sender, RoutedEventArgs e) => DialogResult = false;
     }
 }

@@ -133,10 +133,22 @@
     <Compile Include="ViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ProductDetailViewModel.cs" />
     <Compile Include="ViewModels\ProductsViewModel.cs" />
     <Compile Include="ViewModels\ServiceDetailViewModel.cs" />
     <Compile Include="ViewModels\ServicesViewModel.cs" />
+    <Compile Include="ViewModels\AdminViewModel.cs" />
+    <Compile Include="ViewModels\MasterPageViewModel.cs" />
+    <Compile Include="ViewModels\MasterAppointmentDetailViewModel.cs" />
+    <Compile Include="ViewModels\UserEditViewModel.cs" />
+    <Compile Include="ViewModels\SimpleNameEditViewModel.cs" />
+    <Compile Include="ViewModels\ProductEditWindowViewModel.cs" />
+    <Compile Include="ViewModels\ServiceEditWindowViewModel.cs" />
+    <Compile Include="ViewModels\ScheduleAddViewModel.cs" />
+    <Compile Include="ViewModels\RescheduleViewModel.cs" />
+    <Compile Include="ViewModels\NewAppointmentViewModel.cs" />
+    <Compile Include="ViewModels\OrderWindowViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\ManagerViewModel.cs" />
     <Compile Include="ViewModels\ManagerAppointmentsViewModel.cs" />
@@ -227,6 +239,18 @@
     </Compile>
     <Compile Include="Views\RescheduleAppointmentWindow.xaml.cs">
       <DependentUpon>RescheduleAppointmentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterPage.xaml.cs">
+      <DependentUpon>MasterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterAppointmentDetailPage.xaml.cs">
+      <DependentUpon>MasterAppointmentDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AdminPage.xaml.cs">
+      <DependentUpon>AdminPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserEditWindow.xaml.cs">
+      <DependentUpon>UserEditWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -352,6 +376,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MasterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MasterAppointmentDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AdminPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model.Context.cs">
@@ -414,4 +454,4 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-</Project>
+</Project>
