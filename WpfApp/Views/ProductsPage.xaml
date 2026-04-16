@@ -82,19 +82,29 @@
              ScrollViewer.HorizontalScrollBarVisibility="Disabled" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border Width="156" Height="140"
+                        <Border Width="156"
                         BorderThickness="2" BorderBrush="Black">
-                            <Grid>
+                            <StackPanel>
                                 <Image Source="{Binding Path=Image}"
-                               Stretch="UniformToFill"/>
+                               Stretch="UniformToFill" Height="156"/>
 
                                 <Border Background="White" BorderBrush="Black"
                                 BorderThickness="0,2,0,0"
                                 VerticalAlignment="Bottom">
-                                    <TextBlock Margin="5"
-                                   Text="{Binding Path=Name}"/>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=FinalPrice}"/>
+                                        <TextBlock Text="{Binding Path=Price}"
+                                                   Visibility="{Binding Path=ShowDiscount, 
+                                            Converter={StaticResource BoolToVisibility}}"/>
+                                        <TextBlock Text="{Binding Path=PercentageDiscount, StringFormat={}{0}%}"
+                                                   Visibility="{Binding Path=ShowDiscount, 
+                                            Converter={StaticResource BoolToVisibility}}"/>
+                                        <TextBlock Text="{Binding Path=Name}"/>
+                                        <TextBlock Text="{Binding Path=Rating, StringFormat={}{0:0.0}!}"/>
+                                        <TextBlock Text="{Binding Path=ManufacturerName}"/>
+                                    </StackPanel>
                                 </Border>
-                            </Grid>
+                            </StackPanel>
                         </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

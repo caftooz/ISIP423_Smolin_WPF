@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WpfApp.Views;
 
 namespace WpfApp.ViewModels
@@ -31,15 +32,20 @@ namespace WpfApp.ViewModels
             set { _selectedSortedType = value; OnPropertyChanged(); UpdateProducts(); }
         }
 
-        private Products _selectedProduct;
-        public Products SelectedProduct
+        private ProductDetailWindow window;
+
+        private ProductModel _selectedProduct;
+        public ProductModel SelectedProduct
         {
             get => _selectedProduct;
             set
             {
                 _selectedProduct = value;
-                //if (value != null)
-                //    MainWindow.NavigateTo(new ServiceDetailPage(value));
+                if (_selectedProduct.Product == null)
+                    return;
+                window = new ProductDetailWindow(_selectedProduct);
+                window.Owner = Application.Current.MainWindow;
+                window.ShowDialog();
             }
         }
 
@@ -50,7 +56,7 @@ namespace WpfApp.ViewModels
         private List<FilterChoice<ProductTypes>> _productTypes;
         public List<FilterChoice<ProductTypes>> ProductTypes => _productTypes;
 
-        public ObservableCollection<Products> Products { get; } = new ObservableCollection<Products>();
+        public ObservableCollection<ProductModel> Products { get; } = new ObservableCollection<ProductModel>();
 
         public ProductsViewModel()
         {
@@ -99,9 +105,36 @@ namespace WpfApp.ViewModels
             Products.Clear();
             foreach (var product in products)
             {
-                Products.Add(product);
+                Products.Add(new ProductModel(product));
             }
             OnPropertyChanged(nameof(Products));
+        }
+
+    }
+
+    public class ProductModel
+    {
+        public Products Product { get; }
+        public string Name { get; }
+        public decimal Price { get; }
+        public int PercentageDiscount { get; }
+        public decimal FinalPrice { get; }
+        public double Rating { get; }
+        public string ManufacturerName { get; }
+        public string Image { get; }
+        public string Description { get; }
+        public bool ShowDiscount => PercentageDiscount > 0;
+        public ProductModel(Products product)
+        {
+            Product = product;
+            Name = product.Name;
+            Price = product.Price;
+            PercentageDiscount = product.PercentageDiscount;
+            FinalPrice = Price * (100 - PercentageDiscount) / 100;
+            Rating = product.Rating;
+            ManufacturerName = product.Manufacturers.Name;
+            Image = product.Image;
+            Description = product.Description;
         }
     }
 }
