@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfApp.Commands;
@@ -22,7 +18,6 @@ namespace WpfApp.ViewModels
             set { _phoneNumber = value; OnPropertyChanged(); }
         }
 
-        // Login
         private string _password;
         public string Password
         {
@@ -30,7 +25,6 @@ namespace WpfApp.ViewModels
             set { _password = value; OnPropertyChanged(); }
         }
 
-        // Register
         private string _firstName;
         public string FirstName
         {
@@ -59,22 +53,17 @@ namespace WpfApp.ViewModels
             set { _newPassword = value; OnPropertyChanged(); }
         }
 
-        // Commands
         public ICommand ContinueCommand { get; }
         public ICommand LoginCommand { get; }
         public ICommand RegisterCommand { get; }
         public ICommand BackCommand { get; }
 
-
-        // Error
         private string _errorMessage;
         public string ErrorMessage
         {
             get => _errorMessage;
             set { _errorMessage = value; OnPropertyChanged(); }
         }
-
-        // States
 
         private bool _showPhoneStep = true;
         private bool _showLoginStep;
@@ -83,7 +72,6 @@ namespace WpfApp.ViewModels
         public bool ShowPhoneStep    { get => _showPhoneStep;    set { _showPhoneStep = value;    OnPropertyChanged(); }  }
         public bool ShowLoginStep    { get => _showLoginStep;    set { _showLoginStep = value;    OnPropertyChanged(); }  }
         public bool ShowRegisterStep { get => _showRegisterStep; set { _showRegisterStep = value; OnPropertyChanged(); }  }
-
 
         private Users _foundUser;
 
@@ -131,7 +119,6 @@ namespace WpfApp.ViewModels
 
                 SessionManager.Login(_foundUser);
                 NavigateTo(_foundUser.UserRoleId);
-
             });
 
             RegisterCommand = new RelayCommand(_ =>
@@ -184,15 +171,20 @@ namespace WpfApp.ViewModels
             Page nextPage;
             switch (userRoleId)
             {
-                case 1: MainWindow.GoBack();
+                case 1:
+                    MainWindow.GoBack();
                     return;
-                //case 2: nextPage = new MasterPage();
-                //    break;
-                //case 3: nextPage = new ManagerPage();
-                //    break;
-                //case 4: nextPage = new AdminPage();
-                //    break;
-                default: nextPage = default;
+                case 2:
+                    nextPage = new ManagerPage();
+                    break;
+                case 3:
+                    nextPage = new ManagerPage();
+                    break;
+                case 4:
+                    nextPage = new ManagerPage();
+                    break;
+                default:
+                    nextPage = default;
                     break;
             }
 

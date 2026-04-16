@@ -1,12 +1,27 @@
-﻿<Window x:Class="WpfApp.Views.OrderWindow"
+<Window x:Class="WpfApp.Views.OrderWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp.Views"
-        mc:Ignorable="d"
-        Title="OrderWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Оформление заказа" Height="350" Width="450"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <StackPanel Margin="15">
+        <TextBlock Text="Товары в заказе:" FontWeight="Bold" Margin="0,0,0,5"/>
+        <ListBox x:Name="ItemsList" Height="120" Margin="0,0,0,10"/>
+
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Итого:" FontWeight="Bold" VerticalAlignment="Center"/>
+            <TextBlock x:Name="TotalBlock" Grid.Column="1" FontWeight="Bold" FontSize="16"/>
+        </Grid>
+
+        <TextBlock Text="Способ оплаты"/>
+        <ComboBox x:Name="PayCombo" DisplayMemberPath="Name" Margin="0,0,0,15"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Отмена" Width="100" Margin="0,0,5,0" Click="Cancel_Click"/>
+            <Button Content="Оформить заказ" Width="120" Click="Order_Click"/>
+        </StackPanel>
+    </StackPanel>
 </Window>

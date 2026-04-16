@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Media3D;
 using WpfApp.Commands;
 using WpfApp.Views;
 
@@ -49,6 +43,10 @@ namespace WpfApp.ViewModels
             GoToCartCommand = new RelayCommand(_ =>
             {
                 MainWindow.NavigateTo(new CartPage());
+            });
+            GoToProfileCommand = new RelayCommand(_ =>
+            {
+                MainWindow.NavigateTo(new ProfilePage());
             });
         }
         public event PropertyChangedEventHandler PropertyChanged;

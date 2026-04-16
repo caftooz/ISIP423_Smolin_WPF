@@ -1,0 +1,53 @@
+<Window x:Class="WpfApp.Views.NewAppointmentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Новая запись клиента" Height="520" Width="440"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <StackPanel Margin="15">
+        <TextBlock Text="Клиент (поиск по ФИО или телефону)"/>
+        <TextBox x:Name="ClientSearch" TextChanged="ClientSearch_TextChanged" Margin="0,0,0,4"/>
+        <ListBox x:Name="ClientList" Height="80" DisplayMemberPath="DisplayName" Margin="0,0,0,8"/>
+
+        <TextBlock Text="Услуга"/>
+        <ComboBox x:Name="ServiceCombo" DisplayMemberPath="Name" SelectionChanged="ServiceCombo_Changed" Margin="0,0,0,8"/>
+
+        <TextBlock Text="Мастер"/>
+        <ComboBox x:Name="MasterCombo" Margin="0,0,0,8">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <Run Text="{Binding Users.LastName}"/>
+                        <Run Text=" "/>
+                        <Run Text="{Binding Users.FirstName}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Grid Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Margin="0,0,5,0">
+                <TextBlock Text="Дата"/>
+                <DatePicker x:Name="DatePick"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="Время (чч:мм)"/>
+                <TextBox x:Name="TimeBox"/>
+            </StackPanel>
+        </Grid>
+
+        <TextBlock Text="Способ оплаты"/>
+        <ComboBox x:Name="PayCombo" DisplayMemberPath="Name" Margin="0,0,0,8"/>
+
+        <TextBlock Text="Комментарий"/>
+        <TextBox x:Name="CommentBox" Margin="0,0,0,12"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Отмена" Width="80" Margin="0,0,5,0" Click="Cancel_Click"/>
+            <Button Content="Записать" Width="80" Click="Save_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using WpfApp.Commands;
+using WpfApp.Views;
 
 namespace WpfApp.ViewModels
 {
@@ -49,7 +48,24 @@ namespace WpfApp.ViewModels
             RecalculateTotals();
         }
 
-        private void PlaceOrder() {  }
+        private void PlaceOrder()
+        {
+            if (Items.Count == 0)
+            {
+                MessageBox.Show("Корзина пуста", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var w = new OrderWindow(Items.ToList());
+            w.Owner = Application.Current.MainWindow;
+            var result = w.ShowDialog();
+
+            if (result == true)
+            {
+                Items.Clear();
+                RecalculateTotals();
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)

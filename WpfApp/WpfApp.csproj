@@ -77,6 +77,9 @@
     <Compile Include="Converters\EmptyCollectionToVisibility.cs" />
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToStatusConverter.cs" />
+    <Compile Include="Converters\BoolToFrozenConverter.cs" />
+    <Compile Include="Converters\OrderProductsToStringConverter.cs" />
     <Compile Include="Core\Core.cs" />
     <Compile Include="Core\FilterChoice.cs" />
     <Compile Include="Core\SessionManager.cs" />
@@ -130,11 +133,20 @@
     <Compile Include="ViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ProductDetailViewModel.cs" />
     <Compile Include="ViewModels\ProductsViewModel.cs" />
     <Compile Include="ViewModels\ServiceDetailViewModel.cs" />
     <Compile Include="ViewModels\ServicesViewModel.cs" />
+    <Compile Include="ViewModels\ProfileViewModel.cs" />
+    <Compile Include="ViewModels\ManagerViewModel.cs" />
+    <Compile Include="ViewModels\ManagerAppointmentsViewModel.cs" />
+    <Compile Include="ViewModels\ManagerOrdersViewModel.cs" />
+    <Compile Include="ViewModels\ManagerProductsListViewModel.cs" />
+    <Compile Include="ViewModels\ManagerManufacturersViewModel.cs" />
+    <Compile Include="ViewModels\ManagerProductTypesViewModel.cs" />
+    <Compile Include="ViewModels\ManagerServicesListViewModel.cs" />
+    <Compile Include="ViewModels\ManagerServiceTypesViewModel.cs" />
+    <Compile Include="ViewModels\ManagerSchedulesViewModel.cs" />
     <Compile Include="Views\AppointmentDetailPage.xaml.cs">
       <DependentUpon>AppointmentDetailPage.xaml</DependentUpon>
     </Compile>
@@ -161,6 +173,60 @@
     </Compile>
     <Compile Include="Views\ServicesPage.xaml.cs">
       <DependentUpon>ServicesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManagerPage.xaml.cs">
+      <DependentUpon>ManagerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManagerAppointmentsPage.xaml.cs">
+      <DependentUpon>ManagerAppointmentsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManagerOrdersPage.xaml.cs">
+      <DependentUpon>ManagerOrdersPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManagerProductsPage.xaml.cs">
+      <DependentUpon>ManagerProductsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManagerManufacturersPage.xaml.cs">
+      <DependentUpon>ManagerManufacturersPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManagerProductTypesPage.xaml.cs">
+      <DependentUpon>ManagerProductTypesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManagerServicesPage.xaml.cs">
+      <DependentUpon>ManagerServicesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManagerServiceTypesPage.xaml.cs">
+      <DependentUpon>ManagerServiceTypesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManagerSchedulesPage.xaml.cs">
+      <DependentUpon>ManagerSchedulesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductEditWindow.xaml.cs">
+      <DependentUpon>ProductEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManufacturerEditWindow.xaml.cs">
+      <DependentUpon>ManufacturerEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductTypeEditWindow.xaml.cs">
+      <DependentUpon>ProductTypeEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServiceEditWindow.xaml.cs">
+      <DependentUpon>ServiceEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServiceTypeEditWindow.xaml.cs">
+      <DependentUpon>ServiceTypeEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ScheduleAddWindow.xaml.cs">
+      <DependentUpon>ScheduleAddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewAppointmentWindow.xaml.cs">
+      <DependentUpon>NewAppointmentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RescheduleAppointmentWindow.xaml.cs">
+      <DependentUpon>RescheduleAppointmentWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -211,6 +277,78 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ServicesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManagerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManagerAppointmentsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManagerOrdersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManagerProductsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManagerManufacturersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManagerProductTypesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManagerServicesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManagerServiceTypesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManagerSchedulesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManufacturerEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductTypeEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ServiceEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ServiceTypeEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ScheduleAddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewAppointmentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RescheduleAppointmentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

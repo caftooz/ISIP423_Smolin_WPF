@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace WpfApp
 {
@@ -12,7 +8,7 @@ namespace WpfApp
         public static bool IsLoggedIn => CurrentUser != null;
         public static event Action OnLogin;
 
-        public static void Login(Users user) { CurrentUser = user; OnLogin?.Invoke(); } 
-        public static void Logout() => CurrentUser = null;
+        public static void Login(Users user) { CurrentUser = user; OnLogin?.Invoke(); }
+        public static void Logout() { CurrentUser = null; OnLogin?.Invoke(); }
     }
 }

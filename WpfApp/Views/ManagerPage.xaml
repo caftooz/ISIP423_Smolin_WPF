@@ -1,0 +1,62 @@
+<Page x:Class="WpfApp.Views.ManagerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:vm="clr-namespace:WpfApp.ViewModels"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="900"
+      Title="ManagerPage">
+
+    <Page.DataContext>
+        <vm:ManagerViewModel/>
+    </Page.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Style="{StaticResource Header}" Padding="10,6">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" FontSize="14">
+                        <Run Text="{Binding CurrentUser.LastName}"/>
+                        <Run Text=" "/>
+                        <Run Text="{Binding CurrentUser.FirstName}"/>
+                        <Run Text=" "/>
+                        <Run Text="{Binding CurrentUser.Patronymic}"/>
+                    </TextBlock>
+                    <TextBlock Text="{Binding CurrentUser.PhoneNumber}" Margin="15,0,0,0"
+                               VerticalAlignment="Center" Foreground="Gray"/>
+                </StackPanel>
+                <Button Content="Выйти из аккаунта" HorizontalAlignment="Right"
+                        Command="{Binding LogoutCommand}"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="170"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Sidebar -->
+            <StackPanel Background="#F0F0F0">
+                <Button Content="записи" Command="{Binding NavCommand}" CommandParameter="appointments" Margin="2,4"/>
+                <Button Content="заказы" Command="{Binding NavCommand}" CommandParameter="orders" Margin="2,2"/>
+                <Button Content="товары" Command="{Binding NavCommand}" CommandParameter="products" Margin="2,2"/>
+                <Button Content="производители" Command="{Binding NavCommand}" CommandParameter="manufacturers" Margin="2,2"/>
+                <Button Content="типы товаров" Command="{Binding NavCommand}" CommandParameter="productTypes" Margin="2,2"/>
+                <Button Content="услуги" Command="{Binding NavCommand}" CommandParameter="services" Margin="2,2"/>
+                <Button Content="типы услуг" Command="{Binding NavCommand}" CommandParameter="serviceTypes" Margin="2,2"/>
+                <Button Content="расписание мастеров" Command="{Binding NavCommand}" CommandParameter="schedules" Margin="2,2"/>
+            </StackPanel>
+
+            <!-- Content frame -->
+            <Frame Grid.Column="1" x:Name="ManagerFrame" NavigationUIVisibility="Hidden"/>
+        </Grid>
+    </Grid>
+</Page>
