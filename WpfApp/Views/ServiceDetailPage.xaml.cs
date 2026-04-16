@@ -27,5 +27,10 @@ namespace WpfApp.Views
             var vm = (ServiceDetailViewModel)DataContext;
             vm.CurrentService = service;
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            LListBox.UnselectAll();
+        }
     }
 }

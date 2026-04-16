@@ -64,7 +64,7 @@ namespace WpfApp.ViewModels
             }
             if (_masters.Any(m => m.IsActive))
             {
-                var activeMasterIds = _masters.Where(m => m.IsActive).Select(m => m.Item.Id).ToHashSet();
+                var activeMasterIds = _masters.Where(m => m.IsActive).Select(m => m.Item.Id).ToList();
                 var allowedServiceIds = Core.Context.MasterServices
                     .Where(ms => activeMasterIds.Contains(ms.UserMasterId))
                     .Select(ms => ms.ServiceId)
@@ -83,24 +83,24 @@ namespace WpfApp.ViewModels
             }
             OnPropertyChanged(nameof(Services));
         }
+    }
 
-        public class FilterChoice<T>
+    public class FilterChoice<T>
+    {
+        public T Item { get; }
+        private bool _isActive;
+        private readonly Action _onChanged;
+
+        public bool IsActive
         {
-            public T Item { get; }
-            private bool _isActive;
-            private readonly Action _onChanged;
+            get => _isActive;
+            set { _isActive = value; _onChanged?.Invoke(); }
+        }
 
-            public bool IsActive
-            {
-                get => _isActive;
-                set { _isActive = value; _onChanged?.Invoke(); }
-            }
-
-            public FilterChoice(T item, Action onChanged)
-            {
-                Item = item;
-                _onChanged = onChanged;
-            }
+        public FilterChoice(T item, Action onChanged)
+        {
+            Item = item;
+            _onChanged = onChanged;
         }
     }
 }

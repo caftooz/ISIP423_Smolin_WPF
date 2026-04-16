@@ -184,8 +184,8 @@ namespace WpfApp.ViewModels
             Page nextPage;
             switch (userRoleId)
             {
-                case 1: nextPage = new ServicesPage();
-                    break;
+                case 1: MainWindow.GoBack();
+                    return;
                 //case 2: nextPage = new MasterPage();
                 //    break;
                 //case 3: nextPage = new ManagerPage();

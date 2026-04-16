@@ -12,22 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp.ViewModels;
 
 namespace WpfApp.Views
 {
     /// <summary>
-    /// Логика взаимодействия для ServicesPage.xaml
+    /// Логика взаимодействия для AppointmentDetailPage.xaml
     /// </summary>
-    public partial class ServicesPage : Page
+    public partial class AppointmentDetailPage : Page
     {
-        public ServicesPage()
+        public AppointmentDetailPage(MasterServices ms, DateTime dt)
         {
             InitializeComponent();
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            LListBox.UnselectAll();
+            var vm = (AppointmentDetailViewModel)DataContext;
+            vm.DateTime = dt;
+            vm.MasterService = ms;
         }
     }
 }

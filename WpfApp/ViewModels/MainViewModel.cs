@@ -42,6 +42,10 @@ namespace WpfApp.ViewModels
             {
                 MainWindow.NavigateTo(new ServicesPage());
             });
+            GoToProductsCommand = new RelayCommand(_ =>
+            {
+                MainWindow.NavigateTo(new ProductsPage());
+            });
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)

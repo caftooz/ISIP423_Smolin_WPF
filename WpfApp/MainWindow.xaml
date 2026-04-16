@@ -33,12 +33,12 @@
                             Command="{Binding GoToLoginCommand}"
                             Visibility="{Binding IsLoggedIn,
                             Converter={StaticResource InverseBoolToVisibility}}"/>
-                    <Button Content="профиль"
-                            Command="{Binding GoToProfileCommand}"
-                            Visibility="{Binding IsLoggedIn,
-                            Converter={StaticResource BoolToVisibility}}"/>
                     <Button Content="корзина"
                             Command="{Binding GoToCartCommand}"
+                            Visibility="{Binding IsLoggedIn,
+                            Converter={StaticResource BoolToVisibility}}"/>
+                    <Button Content="профиль"
+                            Command="{Binding GoToProfileCommand}"
                             Visibility="{Binding IsLoggedIn,
                             Converter={StaticResource BoolToVisibility}}"/>
                 </StackPanel>

@@ -24,12 +24,17 @@ namespace WpfApp.Views
         public AppointmentsPage(Services service, Users master)
         {
             InitializeComponent();
+
             var vm = (AppointmentsViewModel)DataContext;
 
             vm.CurrentMaster = master;
             vm.CurrentService = service;
+            vm.InitializeAppointments();
+        }
 
-            vm.UpdateAppointments();
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            AppListBox.UnselectAll();
         }
     }
 }

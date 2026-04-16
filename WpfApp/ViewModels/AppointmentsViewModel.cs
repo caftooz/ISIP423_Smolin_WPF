@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using WpfApp.Views;
 
 namespace WpfApp.ViewModels
 {
@@ -15,29 +17,78 @@ namespace WpfApp.ViewModels
         public Services CurrentService { get; set; }
 
         public Users CurrentMaster { get; set; }
-
         public ObservableCollection<DateTime> MSAppointments { get; } = new ObservableCollection<DateTime>();
 
-        public void UpdateAppointments()
+        private List<DateTime> _allMSAppointments = new List<DateTime>();
+
+        private DateTime _selectedDT;
+        public DateTime SelectedDT
+        {
+            get => _selectedDT;
+            set { _selectedDT = value; OnPropertyChanged(); UpdateAppointments(); }
+        }
+
+        private DateTime _selectedAppointment;
+        public DateTime SelectedAppointment
+        {
+            get => _selectedAppointment;
+            set { _selectedAppointment = value; OnPropertyChanged(); GoToAppointment(); }
+        }
+
+        private void GoToAppointment()
+        {
+            var dt = SelectedAppointment;
+
+            if (!SessionManager.IsLoggedIn)
+            {
+                var result = MessageBox.Show("Для записи необходим войти", "Попытка записи", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+                
+                if (result == MessageBoxResult.OK)
+                {
+                    MainWindow.NavigateTo(new LoginPage());
+                    return;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            MasterServices ms = Core.Context.MasterServices.FirstOrDefault(u => u.UserMasterId == CurrentMaster.Id &&
+                                                                                           u.ServiceId == CurrentService.Id);
+            MainWindow.NavigateTo(new AppointmentDetailPage(ms, dt));
+        }
+
+        private void UpdateAppointments()
+        {
+            var selectedMSAppointments = _allMSAppointments.Where(dt => dt.Day == _selectedDT.Day);
+
+            MSAppointments.Clear();
+            foreach (var t in selectedMSAppointments)
+            {
+                MSAppointments.Add(t);
+            }
+
+            OnPropertyChanged(nameof(MSAppointments));
+        }
+
+        public void InitializeAppointments()
         {
             MasterServices masterService = Core.Context.MasterServices.FirstOrDefault(u => u.UserMasterId == CurrentMaster.Id &&
                                                                                            u.ServiceId == CurrentService.Id);
             if (masterService == null)
             {
-                // ex
+                MessageBox.Show("Данный мастер не проводит данную услугу!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             var schedules = Core.Context.AppointmentSchedules.Where(aps => aps.MasterServiceId == masterService.Id);
 
-            if (schedules == null)
+            if (schedules == null || schedules.Count() <= 0)
             {
-                // ex
+                MessageBox.Show("Не найдено расписание проведения данной услуги данным мастером", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
-            List<DateTime> tmp = new List<DateTime>();
-
             var currentDT = DateTime.Now;
             var DT2W = currentDT.AddDays(14);
 
@@ -50,7 +101,7 @@ namespace WpfApp.ViewModels
                 {
                     var newhm = new DateTime(currentDT.Year, currentDT.Month, currentDT.Day);
                     newhm = newhm.AddHours(time.Time.Hours).AddMinutes(time.Time.Minutes);
-                    tmp.Add(newhm);
+                    _allMSAppointments.Add(newhm);
                 }
 
                 currentDT = currentDT.AddDays(1);
@@ -58,7 +109,7 @@ namespace WpfApp.ViewModels
 
 
             MSAppointments.Clear();
-            foreach (var t in tmp)
+            foreach (var t in _allMSAppointments)
             {
                 MSAppointments.Add(t);
             }

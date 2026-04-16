@@ -16,15 +16,14 @@ using System.Windows.Shapes;
 namespace WpfApp.Views
 {
     /// <summary>
-    /// Логика взаимодействия для ServicesPage.xaml
+    /// Логика взаимодействия для ProductsPage.xaml
     /// </summary>
-    public partial class ServicesPage : Page
+    public partial class ProductsPage : Page
     {
-        public ServicesPage()
+        public ProductsPage()
         {
             InitializeComponent();
         }
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             LListBox.UnselectAll();
