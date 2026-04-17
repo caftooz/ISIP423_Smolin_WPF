@@ -73,8 +73,9 @@ namespace WpfApp.ViewModels
                 var s = SearchText.ToLower();
                 q = q.Where(u => (u.LastName ?? "").ToLower().Contains(s)
                               || (u.FirstName ?? "").ToLower().Contains(s)
-                              || (u.PhoneNumber ?? "").Contains(s));
+                              || (u.PhoneNumber ?? "").Contains(s)); // Скрываем админов при поиске, чтобы не удалили случайно
             }
+            q = q.Where(u => u.Id != SessionManager.CurrentUser.Id);
             foreach (var u in q) Users.Add(u);
         }
 
