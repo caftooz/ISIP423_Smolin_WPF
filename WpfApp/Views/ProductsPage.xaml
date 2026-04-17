@@ -9,12 +9,19 @@
         <vm:ProductsViewModel/>
     </Page.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="180"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Style="{StaticResource SidebarBorder}" Padding="8">
+        <Button Content="Назад" Style="{StaticResource MainButton}" HorizontalAlignment="Left"
+                Margin="10,8" Grid.ColumnSpan="2" Command="{Binding BackCommand}"/>
+
+        <Border Grid.Row="1" Style="{StaticResource SidebarBorder}" Padding="8">
             <TreeView BorderThickness="0" Background="Transparent">
                 <TreeViewItem Header="Тип" ItemsSource="{Binding ProductTypes}">
                     <TreeViewItem.ItemTemplate>
@@ -39,7 +46,7 @@
             </TreeView>
         </Border>
 
-        <Grid Grid.Column="1" Margin="15,10">
+        <Grid Grid.Row="1" Grid.Column="1" Margin="15,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -62,7 +69,7 @@
                      Validation.ErrorTemplate="{x:Null}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border Style="{StaticResource CardBorder}" Width="160" Padding="0">
+                        <Border x:Name="ProductCard" Style="{StaticResource CardBorder}" Width="160" Padding="0">
                             <StackPanel>
                                 <Image Source="{Binding Path=Image}" Stretch="UniformToFill" Height="140"/>
                                 <StackPanel Margin="6,4">
@@ -74,6 +81,13 @@
                                 </StackPanel>
                             </StackPanel>
                         </Border>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding HasBigDiscount}" Value="True">
+                                <Setter TargetName="ProductCard" Property="Background" Value="#FFFDE7"/>
+                                <Setter TargetName="ProductCard" Property="BorderBrush" Value="#FFD54F"/>
+                                <Setter TargetName="ProductCard" Property="BorderThickness" Value="2"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
                 <ListBox.ItemsPanel>

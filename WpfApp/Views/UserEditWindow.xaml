@@ -23,10 +23,10 @@
 
         <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
             <TextBlock Style="{StaticResource BodyText}" Text="Статус" VerticalAlignment="Center" Margin="0,0,15,0"/>
-            <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding IsFrozen}"/>
+            <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding IsNotFrozen}"/>
             <TextBlock Style="{StaticResource CaptionText}" VerticalAlignment="Center" Margin="10,0,0,0">
                 <TextBlock.Text>
-                    <Binding Path="IsFrozen" Converter="{StaticResource BoolToFrozenConverter}"/>
+                    <Binding Path="IsNotFrozen" Converter="{StaticResource BoolToFrozenConverter}"/>
                 </TextBlock.Text>
             </TextBlock>
         </StackPanel>

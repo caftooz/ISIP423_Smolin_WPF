@@ -94,6 +94,15 @@ namespace WpfApp.ViewModels
                 currentDT = currentDT.AddDays(1);
             }
 
+            var activeAppointments = Core.Context.Appointments.Where(a => a.UserMasterId == masterService.UserMasterId && a.ServiceId == masterService.ServiceId);
+
+            foreach (var a in activeAppointments)
+            {
+                var dt = a.AppointmentDateTime;
+                if (_allMSAppointments.Contains(dt))
+                    _allMSAppointments.Remove(dt);
+            }
+
             MSAppointments.Clear();
             foreach (var t in _allMSAppointments)
                 MSAppointments.Add(t);

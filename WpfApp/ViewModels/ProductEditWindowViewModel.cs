@@ -22,8 +22,8 @@ namespace WpfApp.ViewModels
         public string PriceText { get => _priceText; set { _priceText = value; OnPropertyChanged(); } }
         private string _discountText;
         public string DiscountText { get => _discountText; set { _discountText = value; OnPropertyChanged(); } }
-        private bool _isFrozen;
-        public bool IsFrozen { get => _isFrozen; set { _isFrozen = value; OnPropertyChanged(); } }
+        private bool _isNotFrozen;
+        public bool IsNotFrozen { get => _isNotFrozen; set { _isNotFrozen = value; OnPropertyChanged(); } }
         private string _errorMessage;
         public string ErrorMessage { get => _errorMessage; set { _errorMessage = value; OnPropertyChanged(); } }
 
@@ -55,7 +55,7 @@ namespace WpfApp.ViewModels
                 _product.PercentageDiscount = disc;
                 _product.ProductTypeId = SelectedType.Id;
                 _product.ManufacturerId = SelectedManufacturer.Id;
-                _product.IsFrozen = IsFrozen;
+                _product.IsFrozen = !IsNotFrozen;
                 if (_isNew) Core.Context.Products.Add(_product);
                 Core.Context.SaveChanges();
                 RequestClose?.Invoke(true);
@@ -75,7 +75,7 @@ namespace WpfApp.ViewModels
                 DiscountText = _product.PercentageDiscount.ToString();
                 SelectedType = ProductTypes.FirstOrDefault(t => t.Id == _product.ProductTypeId);
                 SelectedManufacturer = Manufacturers.FirstOrDefault(m => m.Id == _product.ManufacturerId);
-                IsFrozen = _product.IsFrozen;
+                IsNotFrozen = !_product.IsFrozen;
             }
         }
 

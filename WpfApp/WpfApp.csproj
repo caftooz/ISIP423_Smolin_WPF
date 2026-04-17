@@ -76,6 +76,7 @@
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Converters\EmptyCollectionToVisibility.cs" />
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\InverseBoolToFrozenConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolToStatusConverter.cs" />
     <Compile Include="Converters\BoolToFrozenConverter.cs" />
@@ -454,4 +455,4 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-</Project>
+</Project>

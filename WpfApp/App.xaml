@@ -17,6 +17,7 @@
             <converter:EmptyCollectionToVisibility x:Key="EmptyCollectionToVisibility"/>
             <converter:BoolToStatusConverter x:Key="BoolToStatusConverter"/>
             <converter:BoolToFrozenConverter x:Key="BoolToFrozenConverter"/>
+            <converter:InverseBoolToFrozenConverter x:Key="InverseBoolToFrozenConverter"/>
             <converter:OrderProductsToStringConverter x:Key="OrderProductsToStringConverter"/>
 
         </ResourceDictionary>

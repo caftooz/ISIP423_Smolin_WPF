@@ -19,6 +19,8 @@ namespace WpfApp.ViewModels
         public List<PaymentMethods> PaymentMethods { get; } = Core.Context.PaymentMethods.ToList();
 
         private DateTime _receivedDate = DateTime.Today.AddDays(3);
+        public DateTime MinDate { get; } = DateTime.Today;
+        public DateTime MaxDate { get; } = DateTime.Today.AddDays(7);
         public DateTime ReceivedDate { get => _receivedDate; set { _receivedDate = value; OnPropertyChanged(); } }
 
         private PaymentMethods _selectedPayment;

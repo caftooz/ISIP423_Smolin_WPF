@@ -25,7 +25,7 @@
                 <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating, StringFormat={}{0:0.0}}" Width="60"/>
                 <DataGridTextColumn Header="Статус" Width="80">
                     <DataGridTextColumn.Binding>
-                        <Binding Path="IsFrozen" Converter="{StaticResource BoolToFrozenConverter}"/>
+                        <Binding Path="IsFrozen" Converter="{StaticResource InverseBoolToFrozenConverter}"/>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTemplateColumn Header="Действия" Width="*">

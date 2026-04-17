@@ -23,7 +23,9 @@ namespace WpfApp.ViewModels
 
         public ICommand AddCommand { get; }
         public ICommand EditCommand { get; }
+        public ICommand DeleteCommand { get; }
         public ICommand LogoutCommand { get; }
+        public ICommand BackCommand { get; }
 
         public AdminViewModel()
         {
@@ -44,6 +46,21 @@ namespace WpfApp.ViewModels
                 w.ShowDialog();
                 Refresh();
             });
+            DeleteCommand = new RelayCommand(p =>
+            {
+                var u = p as WpfApp.Users;
+                if (u == null) return;
+                if (u.Id == CurrentUser.Id) { MessageBox.Show("Нельзя удалить самого себя"); return; }
+                var result = MessageBox.Show($"Удалить пользователя {u.LastName} {u.FirstName}?",
+                    "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    u.IsFrozen = true;
+                    Core.Context.SaveChanges();
+                    Refresh();
+                }
+            });
+            BackCommand = new RelayCommand(_ => MainWindow.GoBack());
             LogoutCommand = new RelayCommand(_ => { SessionManager.Logout(); MainWindow.NavigateTo(new ServicesPage()); });
         }
 

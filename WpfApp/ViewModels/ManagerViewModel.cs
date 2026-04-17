@@ -14,6 +14,7 @@ namespace WpfApp.ViewModels
 
         public ICommand NavCommand { get; }
         public ICommand LogoutCommand { get; }
+        public ICommand BackCommand { get; }
 
         public void SetFrame(Frame frame) { _frame = frame; }
 
@@ -37,6 +38,7 @@ namespace WpfApp.ViewModels
                 if (page != null) _frame.Navigate(page);
             });
 
+            BackCommand = new RelayCommand(_ => MainWindow.GoBack());
             LogoutCommand = new RelayCommand(_ =>
             {
                 SessionManager.Logout();

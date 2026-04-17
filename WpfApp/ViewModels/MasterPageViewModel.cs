@@ -38,6 +38,7 @@ namespace WpfApp.ViewModels
         public ICommand ShowServicesTabCommand { get; }
         public ICommand ShowAppointmentsTabCommand { get; }
         public ICommand LogoutCommand { get; }
+        public ICommand BackCommand { get; }
 
         public MasterPageViewModel()
         {
@@ -45,17 +46,22 @@ namespace WpfApp.ViewModels
             {
                 var uid = CurrentUser.Id;
                 var allServices = Core.Context.Services.ToList();
-                var masterSvcIds = Core.Context.MasterServices.Where(ms => ms.UserMasterId == uid).Select(ms => ms.ServiceId).ToList();
                 foreach (var s in allServices)
-                    MasterServiceItems.Add(new MasterServiceItem { ServiceName = s.Name, IsActive = masterSvcIds.Contains(s.Id) });
+                {
+                    var existing = Core.Context.MasterServices
+                        .FirstOrDefault(ms => ms.UserMasterId == uid && ms.ServiceId == s.Id);
+                    MasterServiceItems.Add(new MasterServiceItem(uid, s.Id, s.Name, existing != null));
+                }
 
-                foreach (var a in Core.Context.Appointments.Where(a => a.UserMasterId == uid && !a.IsCompleted).ToList()
+                foreach (var a in Core.Context.Appointments
+                    .Where(a => a.UserMasterId == uid && !a.IsCompleted).ToList()
                     .OrderBy(a => a.AppointmentDateTime))
                     MasterAppointments.Add(a);
             }
 
             ShowServicesTabCommand = new RelayCommand(_ => { ShowServicesTab = true; ShowAppointmentsTab = false; });
             ShowAppointmentsTabCommand = new RelayCommand(_ => { ShowServicesTab = false; ShowAppointmentsTab = true; });
+            BackCommand = new RelayCommand(_ => MainWindow.GoBack());
             LogoutCommand = new RelayCommand(_ => { SessionManager.Logout(); MainWindow.NavigateTo(new ServicesPage()); });
         }
 
@@ -64,9 +70,57 @@ namespace WpfApp.ViewModels
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 
-    public class MasterServiceItem
+    public class MasterServiceItem : INotifyPropertyChanged
     {
-        public string ServiceName { get; set; }
-        public bool IsActive { get; set; }
+        private readonly int _masterId;
+        private readonly int _serviceId;
+
+        public string ServiceName { get; }
+
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                if (_isActive == value) return;
+                _isActive = value;
+                OnPropertyChanged();
+                SaveToDb();
+            }
+        }
+
+        public MasterServiceItem(int masterId, int serviceId, string serviceName, bool isActive)
+        {
+            _masterId = masterId;
+            _serviceId = serviceId;
+            ServiceName = serviceName;
+            _isActive = isActive;
+        }
+
+        private void SaveToDb()
+        {
+            var existing = Core.Context.MasterServices
+                .FirstOrDefault(ms => ms.UserMasterId == _masterId && ms.ServiceId == _serviceId);
+
+            if (_isActive && existing == null)
+            {
+                Core.Context.MasterServices.Add(new MasterServices
+                {
+                    UserMasterId = _masterId,
+                    ServiceId = _serviceId
+                });
+                Core.Context.SaveChanges();
+            }
+            else if (!_isActive && existing != null)
+            {
+                Core.Context.MasterServices.Remove(existing);
+                Core.Context.SaveChanges();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

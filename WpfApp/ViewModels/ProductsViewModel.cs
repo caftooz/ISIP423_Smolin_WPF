@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using WpfApp.Commands;
 using WpfApp.Views;
 
 namespace WpfApp.ViewModels
@@ -61,11 +61,12 @@ namespace WpfApp.ViewModels
         private List<FilterChoice<Manufacturers>> _manufacturers;
         public List<FilterChoice<Manufacturers>> Manufacturers => _manufacturers;
 
-
         private List<FilterChoice<ProductTypes>> _productTypes;
         public List<FilterChoice<ProductTypes>> ProductTypes => _productTypes;
 
         public ObservableCollection<ProductModel> Products { get; } = new ObservableCollection<ProductModel>();
+
+        public ICommand BackCommand { get; } = new RelayCommand(_ => MainWindow.GoBack());
 
         public ProductsViewModel()
         {
@@ -80,7 +81,7 @@ namespace WpfApp.ViewModels
 
         private void UpdateProducts()
         {
-            var products = Core.Context.Products.ToList().AsQueryable();
+            var products = Core.Context.Products.Where(p => !p.IsFrozen).ToList().AsQueryable();
 
             if (_productTypes.Any(s => s.IsActive))
             {
@@ -90,7 +91,6 @@ namespace WpfApp.ViewModels
             if (_manufacturers.Any(m => m.IsActive))
             {
                 var activeManufacturersIds = _manufacturers.Where(m => m.IsActive).Select(m => m.Item.Id);
-
                 products = products.Where(p => activeManufacturersIds.Any(amId => p.ManufacturerId == amId));
             }
             if (!string.IsNullOrEmpty(FindText))
@@ -118,7 +118,6 @@ namespace WpfApp.ViewModels
             }
             OnPropertyChanged(nameof(Products));
         }
-
     }
 
     public class ProductModel
@@ -133,6 +132,7 @@ namespace WpfApp.ViewModels
         public string Image { get; }
         public string Description { get; }
         public bool ShowDiscount => PercentageDiscount > 0;
+        public bool HasBigDiscount => PercentageDiscount > 15;
         public ProductModel(Products product)
         {
             Product = product;

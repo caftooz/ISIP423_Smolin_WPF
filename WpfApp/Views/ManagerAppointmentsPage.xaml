@@ -17,6 +17,15 @@
         </StackPanel>
         <DataGrid Style="{StaticResource MainDataGrid}" Grid.Row="1" ItemsSource="{Binding Items}"
                  >
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsCompleted}" Value="True">
+                            <Setter Property="Background" Value="#C8E6C9"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Дата" Binding="{Binding AppointmentDateTime, StringFormat='dd.MM.yyyy'}" Width="90"/>
                 <DataGridTextColumn Header="Время" Width="60">
@@ -44,6 +53,9 @@
                                         CommandParameter="{Binding}"/>
                                 <Button Content="перенести" Style="{StaticResource MainButton}" Margin="2"
                                         Command="{Binding DataContext.RescheduleCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding}"/>
+                                <Button Content="отменить" Style="{StaticResource DangerButton}" Margin="2"
+                                        Command="{Binding DataContext.CancelCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                         CommandParameter="{Binding}"/>
                             </StackPanel>
                         </DataTemplate>

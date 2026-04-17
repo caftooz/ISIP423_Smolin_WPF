@@ -3,9 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:vm="clr-namespace:WpfApp.ViewModels"
       Title="AdminPage">
-    <Page.DataContext>
-        <vm:AdminViewModel/>
-    </Page.DataContext>
+    <Page.DataContext><vm:AdminViewModel/></Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,15 +13,18 @@
 
         <Border Style="{StaticResource Header}">
             <Grid>
-                <TextBlock Style="{StaticResource SubtitleText}" VerticalAlignment="Center">
-                    <Run Text="{Binding CurrentUser.LastName, Mode=OneWay}"/>
-                    <Run Text=" "/><Run Text="{Binding CurrentUser.FirstName, Mode=OneWay}"/>
-                    <Run Text=" "/><Run Text="{Binding CurrentUser.Patronymic, Mode=OneWay}"/>
-                </TextBlock>
-                <TextBlock Style="{StaticResource CaptionText}" VerticalAlignment="Center" Margin="0,18,0,0"
-                           Text="{Binding CurrentUser.PhoneNumber}"/>
-                <Button Content="Выйти из аккаунта" Style="{StaticResource MainButton}"
-                        HorizontalAlignment="Right" Command="{Binding LogoutCommand}"/>
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SubtitleText}">
+                        <Run Text="{Binding CurrentUser.LastName, Mode=OneWay}"/>
+                        <Run Text=" "/><Run Text="{Binding CurrentUser.FirstName, Mode=OneWay}"/>
+                        <Run Text=" "/><Run Text="{Binding CurrentUser.Patronymic, Mode=OneWay}"/>
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource CaptionText}" Text="{Binding CurrentUser.PhoneNumber}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Назад" Style="{StaticResource MainButton}" Command="{Binding BackCommand}"/>
+                    <Button Content="Выйти из аккаунта" Style="{StaticResource MainButton}" Command="{Binding LogoutCommand}"/>
+                </StackPanel>
             </Grid>
         </Border>
 
@@ -38,10 +39,11 @@
                  Margin="20,10">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Style="{StaticResource CardBorder}" Width="500">
+                    <Border Style="{StaticResource CardBorder}" Width="540">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel>
@@ -56,8 +58,12 @@
                                 </TextBlock>
                             </StackPanel>
                             <Button Grid.Column="1" Content="✏" Style="{StaticResource IconButton}"
-                                    VerticalAlignment="Center"
+                                    VerticalAlignment="Center" Margin="4"
                                     Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                    CommandParameter="{Binding}"/>
+                            <Button Grid.Column="2" Content="🗑" Style="{StaticResource IconButton}"
+                                    VerticalAlignment="Center" Margin="4"
+                                    Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                     CommandParameter="{Binding}"/>
                         </Grid>
                     </Border>

@@ -24,8 +24,8 @@ namespace WpfApp.ViewModels
         private string _password;
         public string Password { get => _password; set { _password = value; OnPropertyChanged(); } }
 
-        private bool _isFrozen;
-        public bool IsFrozen { get => _isFrozen; set { _isFrozen = value; OnPropertyChanged(); } }
+        private bool _isNotFrozen;
+        public bool IsNotFrozen { get => _isNotFrozen; set { _isNotFrozen = value; OnPropertyChanged(); } }
 
         private string _errorMessage;
         public string ErrorMessage { get => _errorMessage; set { _errorMessage = value; OnPropertyChanged(); } }
@@ -56,7 +56,7 @@ namespace WpfApp.ViewModels
                 _user.PhoneNumber = Phone.Trim();
                 if (!string.IsNullOrEmpty(Password)) _user.Password = Password;
                 _user.UserRoleId = SelectedRole.Id;
-                _user.IsFrozen = IsFrozen;
+                _user.IsFrozen = !IsNotFrozen;
 
                 if (_isNew) Core.Context.Users.Add(_user);
                 Core.Context.SaveChanges();
@@ -74,7 +74,7 @@ namespace WpfApp.ViewModels
             {
                 FullName = $"{_user.LastName} {_user.FirstName} {_user.Patronymic}".Trim();
                 Phone = _user.PhoneNumber;
-                IsFrozen = _user.IsFrozen;
+                IsNotFrozen = !_user.IsFrozen;
                 SelectedRole = Roles.FirstOrDefault(r => r.Id == _user.UserRoleId);
             }
             else

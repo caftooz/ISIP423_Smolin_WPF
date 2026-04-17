@@ -71,7 +71,7 @@
                  Visibility="{Binding ShowAppointments, Converter={StaticResource BoolToVisibility}}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Style="{StaticResource CardBorder}" Width="580">
+                    <Border x:Name="AppCard" Style="{StaticResource CardBorder}" Width="580">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
@@ -97,6 +97,12 @@
                             </StackPanel>
                         </Grid>
                     </Border>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsCompleted}" Value="True">
+                            <Setter TargetName="AppCard" Property="Background" Value="#C8E6C9"/>
+                            <Setter TargetName="AppCard" Property="BorderBrush" Value="#81C784"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

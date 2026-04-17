@@ -24,6 +24,7 @@ namespace WpfApp.ViewModels
         public ICommand AddCommand { get; }
         public ICommand CompleteCommand { get; }
         public ICommand RescheduleCommand { get; }
+        public ICommand CancelCommand { get; }
 
         public ManagerAppointmentsViewModel()
         {
@@ -54,6 +55,19 @@ namespace WpfApp.ViewModels
                 w.Owner = Application.Current.MainWindow;
                 w.ShowDialog();
                 Refresh();
+            });
+
+            CancelCommand = new RelayCommand(p =>
+            {
+                var a = p as Appointments;
+                if (a == null) return;
+                var result = MessageBox.Show("Отменить запись?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Core.Context.Appointments.Remove(a);
+                    Core.Context.SaveChanges();
+                    Refresh();
+                }
             });
         }
 

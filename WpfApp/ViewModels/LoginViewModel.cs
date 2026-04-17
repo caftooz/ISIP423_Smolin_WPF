@@ -57,6 +57,7 @@ namespace WpfApp.ViewModels
                 ErrorMessage = null;
                 if (string.IsNullOrEmpty(Password)) { ErrorMessage = "Введите пароль"; return; }
                 if (_foundUser.Password != Password) { ErrorMessage = "Пароль не совпадает"; return; }
+                if (_foundUser.IsFrozen) { ErrorMessage = "Аккаунт заблокирован"; return; }
                 SessionManager.Login(_foundUser);
                 NavigateTo(_foundUser.UserRoleId);
             });

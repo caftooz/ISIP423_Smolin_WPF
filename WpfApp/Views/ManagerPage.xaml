@@ -19,7 +19,10 @@
                     </TextBlock>
                     <TextBlock Style="{StaticResource CaptionText}" Text="{Binding CurrentUser.PhoneNumber}"/>
                 </StackPanel>
-                <Button Content="Выйти из аккаунта" Style="{StaticResource MainButton}" HorizontalAlignment="Right" Command="{Binding LogoutCommand}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Назад" Style="{StaticResource MainButton}" Command="{Binding BackCommand}"/>
+                    <Button Content="Выйти из аккаунта" Style="{StaticResource MainButton}" Command="{Binding LogoutCommand}"/>
+                </StackPanel>
             </Grid>
         </Border>
         <Grid Grid.Row="1">
