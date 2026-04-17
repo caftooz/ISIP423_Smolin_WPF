@@ -5,7 +5,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="clr-namespace:WpfApp.ViewModels"
       mc:Ignorable="d" Loaded="Page_Loaded" Title="AppointmentsPage">
-    <Page.DataContext><vm:AppointmentsViewModel/></Page.DataContext>
+    <Page.DataContext>
+        <vm:AppointmentsViewModel/>
+    </Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -24,13 +26,17 @@
             <Calendar Style="{StaticResource MainCalendar}" SelectedDate="{Binding SelectedDT}"/>
 
             <Grid Grid.Column="1" Margin="10,0,10,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="239*"/>
+                    <ColumnDefinition Width="12*"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid Margin="0,0,0,8">
+                <Grid Margin="0,0,0,8" Grid.ColumnSpan="2">
                     <TextBlock Style="{StaticResource SubtitleText}" Text="{Binding CurrentService.Name}"/>
                     <TextBlock Style="{StaticResource BodyText}" HorizontalAlignment="Right">
                         <Run Text="{Binding CurrentMaster.FirstName, Mode=OneWay}"/>
@@ -39,23 +45,24 @@
                     </TextBlock>
                 </Grid>
 
-                <Border Grid.Row="1" Visibility="{Binding MSAppointments, Converter={StaticResource EmptyCollectionToVisibility}}" Margin="0,0,0,5">
+                <Border Grid.Row="1" Visibility="{Binding MSAppointments, Converter={StaticResource EmptyCollectionToVisibility}}" Margin="0,0,0,5" Grid.ColumnSpan="2">
                     <TextBlock Style="{StaticResource CaptionText}" Text="Записей на это число нет!"/>
                 </Border>
 
                 <ListBox Grid.Row="2" x:Name="AppListBox" Style="{StaticResource MainListBox}"
                          SelectedItem="{Binding SelectedAppointment}" ItemsSource="{Binding MSAppointments}"
-                         Validation.ErrorTemplate="{x:Null}">
+                         Validation.ErrorTemplate="{x:Null}" Grid.ColumnSpan="2" d:ItemsSource="{d:SampleData ItemCount=5}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border Style="{StaticResource CardBorder}" Width="152" Height="50">
+                            <Border Style="{StaticResource CardBorder}" Width="148">
                                 <StackPanel HorizontalAlignment="Center">
                                     <TextBlock Style="{StaticResource CaptionText}" TextAlignment="Center"
                                                Text="{Binding Path=Date, StringFormat='dd.MM.yyyy'}"/>
                                     <TextBlock Style="{StaticResource SubtitleText}" TextAlignment="Center">
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0:00}:{1:00}">
-                                                <Binding Path="Hour"/><Binding Path="Minute"/>
+                                                <Binding Path="Hour"/>
+                                                <Binding Path="Minute"/>
                                             </MultiBinding>
                                         </TextBlock.Text>
                                     </TextBlock>
@@ -64,7 +71,9 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate><WrapPanel Width="500"/></ItemsPanelTemplate>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Width="500"/>
+                        </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                 </ListBox>
             </Grid>
